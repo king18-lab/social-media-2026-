@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Stackly | 404 - Page Not Found</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: #000000;  /* pure black background */
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    /* 404 card container */
+    .error-container {
+      max-width: 680px;
+      width: 100%;
+      background: #0a0a0a;
+      border-radius: 2rem;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      border: 1px solid rgba(250, 204, 21, 0.25);
+      box-shadow: 0 25px 45px -12px rgba(0,0,0,0.5);
+      transition: all 0.2s;
+    }
+
+    /* Stackly logo area */
+    .stackly-badge {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.8rem;
+    }
+    .logo-icon svg {
+      width: 48px;
+      height: 48px;
+      filter: drop-shadow(0 2px 6px rgba(250,204,21,0.3));
+    }
+    .logo-text {
+      font-size: 1.9rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #facc15 0%, #ffde6e 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    /* 404 number */
+    .error-code {
+      font-size: 8rem;
+      font-weight: 800;
+      background: linear-gradient(125deg, #facc15, #ffffff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      line-height: 1;
+      margin: 0.5rem 0;
+      text-shadow: 0 0 15px rgba(250,204,21,0.2);
+    }
+
+    h1 {
+      color: #ffffff;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      letter-spacing: -0.3px;
+    }
+
+    .description {
+      color: #c0c0c0;
+      font-size: 1rem;
+      line-height: 1.5;
+      max-width: 450px;
+      margin: 0 auto 2rem auto;
+    }
+
+    /* social media hint */
+    .social-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(250, 204, 21, 0.12);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      color: #facc15;
+      margin-bottom: 2rem;
+    }
+
+    /* button group */
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.9rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: #facc15;
+      color: #000000;
+      box-shadow: 0 4px 12px rgba(250, 204, 21, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: #ffde34;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(250, 204, 21, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      border: 1px solid rgba(250, 204, 21, 0.4);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(250, 204, 21, 0.15);
+      border-color: #facc15;
+      transform: translateY(-3px);
+    }
+
+    /* social media mini icons row */
+    .social-mini {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .social-mini a {
+      color: #7c7c7c;
+      font-size: 1.2rem;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .social-mini a:hover {
+      color: #facc15;
+      transform: translateY(-3px);
+    }
+
+    hr {
+      margin: 1.8rem 0 1rem;
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(250,204,21,0.3), transparent);
+    }
+
+    .copyright-note {
+      font-size: 0.7rem;
+      color: #5a5a5a;
+      margin-top: 1rem;
+    }
+
+    /* mobile responsive */
+    @media (max-width: 550px) {
+      .error-container {
+        padding: 1.8rem 1.2rem;
+      }
+      .error-code {
+        font-size: 5.5rem;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+      .btn {
+        padding: 0.7rem 1.4rem;
+        font-size: 0.85rem;
+      }
+      .button-group {
+        gap: 0.8rem;
+      }
+      .logo-text {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="error-container">
+  
+  <!-- Stackly branding with logo image (inline SVG) -->
+  <div class="stackly-badge">
+    <div class="logo-icon">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="">
+        <rect width="48" height="48" rx="12" fill="#FACC15" />
+        <path d="M24 12L34 18L24 24L14 18L24 12Z" fill="black" stroke="black" stroke-width="1.2" />
+        <path d="M24 26L34 32L24 38L14 32L24 26Z" fill="black" stroke="black" stroke-width="1.2" />
+        <circle cx="24" cy="19" r="2" fill="white" />
+        <circle cx="24" cy="33" r="2" fill="white" />
+        <text x="24" y="44" font-size="8" text-anchor="middle" fill="black" font-weight="bold">S</text>
+      </svg>
+    </div>
+    <span class="logo-text">STACKLY</span>
+  </div>
+
+  <!-- 404 main content -->
+  <div class="error-code">404</div>
+  <h1>Page lost in the feed</h1>
+  <p class="description">
+    Oops! The page you're looking for doesn't exist or has been moved.<br>
+    But don't worry — you can still find your way back.
+  </p>
+
+  <div class="social-hint">
+    <i class="fas fa-hashtag"></i> #StacklySocial · Stay connected
+  </div>
+
+  <!-- TWO BUTTONS: Back to Home + Previous Page -->
+  <div class="button-group">
+    <a href="index.html" class="btn btn-primary">
+      <i class="fas fa-home"></i> Back to Home
+    </a>
+    <button class="btn btn-secondary" id="prevPageBtn">
+      <i class="fas fa-arrow-left"></i> Previous Page
+    </button>
+  </div>
+
+  <!-- social media mini icons (just for vibe) -->
+  <div class="social-mini">
+    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+  </div>
+
+  <hr>
+  <div class="copyright-note">
+    <i class="far fa-copyright"></i> 2026 Stackly — Social Media Universe
+  </div>
+</div>
+
+<script>
+  // Previous Page button functionality: goes back in history
+  document.getElementById('prevPageBtn').addEventListener('click', function() {
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      // fallback: if no previous page, redirect to home
+      window.location.href = 'index.html';
+    }
+  });
+</script>
+
+</body>
+</html>

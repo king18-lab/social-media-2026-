@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <title>Stackly | Modern Responsive Navbar + Services</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f7fb;
+      overflow-x: hidden;
+      
+    }
+
+    /* ----- STICKY NAVBAR (CLEAN, FIXED Z-INDEX) ----- */
+    .stackly-navbar {
+      background: #fff;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0 24px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1480px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ----- LOGO STYLES ----- */
+    .stackly-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      line-height: 0;
+    }
+
+    .logo-img {
+      width: 200px;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      transition: 0.2s;
+    }
+
+    /* ----- DESKTOP CIRCLE MENU (sleek & interactive) ----- */
+    .circle-nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .circle-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      cursor: pointer;
+      min-width: 68px;
+    }
+
+    .circle-icon {
+      width: 56px;
+      height: 56px;
+      background: #f0f2f5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      margin-bottom: 6px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+    }
+
+    .circle-icon i {
+      font-size: 24px;
+      color: #1c1e21;
+      transition: 0.2s;
+    }
+
+    .circle-item span {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #1c1e21;
+      letter-spacing: -0.2px;
+    }
+
+    .circle-item:hover .circle-icon {
+      background: #ffe6df;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px rgba(217, 104, 70, 0.15);
+    }
+
+    .circle-item:hover i {
+      color: #ffbf00;
+    }
+
+    .circle-item:hover span {
+      color: #ffbf00;
+    }
+
+    .circle-item.get-started .circle-icon {
+      background: #ffbf00;
+    }
+    .circle-item.get-started .circle-icon i {
+      color: white;
+    }
+    .circle-item.get-started span {
+      font-weight: 700;
+      color: #ffbf00;
+    }
+
+    .circle-item.login .circle-icon {
+      background: #fef2ef;
+    }
+
+    /* ----- HAMBURGER BUTTON (mobile only) ----- */
+    .hamburger-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #1c1e21;
+      padding: 8px;
+      transition: 0.2s;
+      z-index: 1002;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hamburger-btn:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    /* ----- FULLSCREEN MOBILE MENU (PREMIUM OVERLAY) ----- */
+    .mobile-fullscreen-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, black 0%, #968041);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      visibility: hidden;
+      overflow-y: auto;
+      backdrop-filter: blur(2px);
+    }
+
+    .mobile-fullscreen-menu.open {
+      transform: translateX(0);
+      visibility: visible;
+    }
+
+    .close-menu-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 52px;
+      height: 52px;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 2001;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .close-menu-btn i {
+      font-size: 28px;
+      color: white;
+      transition: 0.2s;
+    }
+
+    .close-menu-btn:hover {
+      background: rgba(0, 0, 0, 0.4);
+      transform: scale(1.05);
+    }
+
+    .mobile-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      text-align: center;
+      width: 100%;
+      max-width: 300px;
+      padding: 20px;
+    }
+
+    .mobile-nav-list a {
+      text-decoration: none;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 14px 20px;
+      border-radius: 80px;
+      transition: 0.25s ease;
+      background: rgba(255, 255, 245, 0.12);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .mobile-nav-list a i {
+      font-size: 1.6rem;
+      width: 36px;
+      color: white;
+    }
+
+    .mobile-nav-list a:hover {
+      background: rgba(0, 0, 0, 0.2);
+      transform: scale(1.02);
+      color: #fff9e0;
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .mobile-menu-footer {
+      margin-top: 56px;
+      font-size: 0.8rem;
+      opacity: 0.85;
+      color: rgba(255, 255, 245, 0.9);
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 28px 80px 28px;
+    }
+
+    .hero-section {
+      background: white;
+      border-radius: 32px;
+      padding: 48px 40px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .hero-section h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1c1e21, #ffbf00);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 18px;
+    }
+
+    .hero-section p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #2d3e50;
+      margin-bottom: 24px;
+    }
+
+    .feature-grid {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .feature-card {
+      background: #f9fafc;
+      border-radius: 24px;
+      padding: 20px;
+      flex: 1;
+      min-width: 180px;
+      text-align: center;
+      transition: 0.2s;
+    }
+
+    .feature-card i {
+      font-size: 32px;
+      color: #ffbf00;
+      margin-bottom: 12px;
+    }
+
+    /* ----- RESPONSIVE (MOBILE + TABLET) ----- */
+    @media (max-width: 860px) {
+      .stackly-navbar {
+        height: 68px;
+        padding: 0 18px;
+      }
+      .circle-nav-menu {
+        display: none;
+      }
+      .hamburger-btn {
+        display: flex;
+      }
+      .logo-img {
+        width: 130px;
+      }
+      .main-content {
+        padding: 24px 20px 60px 20px;
+      }
+      .hero-section {
+        padding: 32px 24px;
+      }
+      .hero-section h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stackly-navbar {
+        height: 60px;
+        padding: 0 14px;
+      }
+      .logo-img {
+        width: 180px;
+      }
+      .mobile-nav-list a {
+        font-size: 1.4rem;
+        gap: 14px;
+        padding: 12px 18px;
+      }
+      .mobile-nav-list a i {
+        font-size: 1.3rem;
+      }
+      .close-menu-btn {
+        width: 48px;
+        height: 48px;
+        top: 18px;
+        right: 18px;
+      }
+      .close-menu-btn i {
+        font-size: 24px;
+      }
+      .hero-section h1 {
+        font-size: 1.6rem;
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY NAVBAR -->
+  <nav class="stackly-navbar">
+    <div class="nav-inner">
+      <!-- Logo with home link -->
+      <a href="index.html" class="stackly-logo" aria-label="Stackly homepage">
+        <img class="logo-img" src="stacklylogo (3).webp" alt="Stackly Logo" onerror="this.src='https://placehold.co/200x60?text=Stackly'">
+      </a>
+
+      <!-- Desktop circle navigation (visible only on desktop) -->
+      <div class="circle-nav-menu">
+        <a href="index.html" class="circle-item"><div class="circle-icon"><i class="fas fa-home"></i></div><span>Home</span></a>
+        <a href="events.html" class="circle-item"><div class="circle-icon"><i class="fas fa-calendar-alt"></i></div><span>Events</span></a>
+        <a href="posts.html" class="circle-item"><div class="circle-icon"><i class="fas fa-file-alt"></i></div><span>Posts</span></a>
+        <a href="about.html" class="circle-item"><div class="circle-icon"><i class="fas fa-info-circle"></i></div><span>About</span></a>
+        <a href="contact.html" class="circle-item"><div class="circle-icon"><i class="fas fa-envelope"></i></div><span>Contact</span></a>
+        <a href="login.html" class="circle-item login"><div class="circle-icon"><i class="fas fa-sign-in-alt"></i></div><span>Login</span></a>
+        <a href="getstarted.html" class="circle-item get-started"><div class="circle-icon"><i class="fas fa-user-plus"></i></div><span>Get Started</span></a>
+      </div>
+
+      <!-- Hamburger button (mobile only) -->
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- FULLSCREEN MOBILE MENU (covers navbar completely) -->
+  <div class="mobile-fullscreen-menu" id="mobileMenu">
+    <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="mobile-nav-list">
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="events.html"><i class="fas fa-calendar-alt"></i> Events</a>
+      <a href="posts.html"><i class="fas fa-file-alt"></i> Posts</a>
+      <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+      <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+      <a href="getstarted.html"><i class="fas fa-user-plus"></i> Get Started</a>
+    </div>
+    <div class="mobile-menu-footer">© Stackly - 2026</div>
+  </div>
+
+  <script>
+    (function() {
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const closeMenuBtn = document.getElementById('closeMenuBtn');
+      const body = document.body;
+      const allMobileLinks = document.querySelectorAll('.mobile-nav-list a');
+      // No demo alerts — all links work normally (they have hrefs)
+
+      function openMobileMenu() {
+        if (!mobileMenu) return;
+        mobileMenu.classList.add('open');
+        body.classList.add('menu-open');
+        if (hamburgerBtn) hamburgerBtn.style.display = 'none';
+      }
+
+      function closeMobileMenu() {
+        if (!mobileMenu) return;
+        mobileMenu.classList.remove('open');
+        body.classList.remove('menu-open');
+        if (hamburgerBtn) hamburgerBtn.style.display = '';
+      }
+
+      if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (mobileMenu.classList.contains('open')) closeMobileMenu();
+          else openMobileMenu();
+        });
+      }
+
+      if (closeMenuBtn) {
+        closeMenuBtn.addEventListener('click', closeMobileMenu);
+      }
+
+      // Close menu after clicking a mobile link (but allow navigation)
+      allMobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          closeMobileMenu();
+        });
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('open')) {
+          closeMobileMenu();
+        }
+      });
+
+      function handleResize() {
+        if (window.innerWidth > 860) {
+          if (mobileMenu && mobileMenu.classList.contains('open')) closeMobileMenu();
+          if (hamburgerBtn) hamburgerBtn.style.display = '';
+        } else {
+          if (mobileMenu && !mobileMenu.classList.contains('open') && hamburgerBtn) {
+            hamburgerBtn.style.display = '';
+          } else if (mobileMenu && mobileMenu.classList.contains('open') && hamburgerBtn) {
+            hamburgerBtn.style.display = 'none';
+          }
+        }
+      }
+      window.addEventListener('resize', handleResize);
+      handleResize();
+    })();
+  </script>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #000000;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* ========== HERO SECTION (image background) ========== */
+    .about-hero {
+      position: relative;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)), url('https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1600');
+      background-size: cover;
+      background-position: center;
+      padding: 4rem 2rem;
+    }
+    .hero-content {
+      max-width: 800px;
+      color: white;
+      z-index: 2;
+    }
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, #facc15);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    .hero-btn {
+      display: inline-block;
+      background: #facc15;
+      color: #000000;
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .hero-btn:hover {
+      background: #eab308;
+      transform: translateY(-3px);
+    }
+
+    /* ========== MAIN CONTAINER ========== */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    /* Section titles */
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: #ffffff;
+    }
+    .section-title span {
+      background: linear-gradient(135deg, #facc15, #eab308);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    /* Mission & Vision (black cards, yellow borders) */
+    .mv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .mv-card {
+      background: #0a0a0a;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 1px solid #2a2a2a;
+      transition: 0.3s;
+    }
+    .mv-card:hover {
+      transform: translateY(-8px);
+      border-color: #facc15;
+      box-shadow: 0 20px 40px rgba(250,204,21,0.1);
+    }
+    .mv-img {
+      width: 100%;
+      height: 220px;
+      background-size: cover;
+      background-position: center;
+    }
+    .mv-text {
+      padding: 1.8rem;
+      text-align: center;
+    }
+    .mv-text h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #facc15;
+    }
+    .mv-text p {
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    /* Stats Section (yellow background) */
+    .stats-section {
+      background: linear-gradient(135deg, #facc15, #eab308);
+      border-radius: 2rem;
+      padding: 3rem 2rem;
+      margin: 4rem 0;
+      text-align: center;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+    }
+    .stat-item h2 {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #000000;
+    }
+    .stat-item p {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    /* Core Values (dark cards) */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .value-card {
+      background: #0a0a0a;
+      padding: 1.8rem;
+      border-radius: 1.2rem;
+      text-align: center;
+      transition: 0.3s;
+      border: 1px solid #2a2a2a;
+    }
+    .value-card:hover {
+      transform: scale(1.02);
+      border-color: #facc15;
+    }
+    .value-icon {
+      width: 70px;
+      height: 70px;
+      background: rgba(250,204,21,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .value-icon i {
+      font-size: 2rem;
+      color: #facc15;
+    }
+    .value-card h4 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
+    .value-card p {
+      color: #cbd5e1;
+    }
+
+    /* Team / Company Profiles */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 4rem;
+    }
+    .team-card {
+      background: #0a0a0a;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: 0.3s;
+      border: 1px solid #2a2a2a;
+    }
+    .team-card:hover {
+      transform: translateY(-5px);
+      border-color: #facc15;
+    }
+    .team-img {
+      width: 100%;
+      height: 280px;
+      background-size: cover;
+      background-position: center;
+    }
+    .team-info {
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .team-info h4 {
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+      color: #ffffff;
+    }
+    .team-role {
+      color: #facc15;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+    .team-bio {
+      color: #cbd5e1;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 1rem;
+    }
+    .team-social a {
+      color: #94a3b8;
+      margin: 0 0.5rem;
+      font-size: 1.2rem;
+      transition: 0.2s;
+      display: inline-block;
+    }
+    .team-social a:hover {
+      color: #facc15;
+      transform: translateY(-2px);
+    }
+
+    /* Subscriber Reviews */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .review-card {
+      background: #0a0a0a;
+      padding: 1.8rem;
+      border-radius: 1.5rem;
+      text-align: center;
+      transition: 0.3s;
+      border: 1px solid #2a2a2a;
+    }
+    .review-card:hover {
+      transform: translateY(-5px);
+      border-color: #facc15;
+    }
+    .review-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-size: cover;
+      margin: 0 auto 1rem;
+      border: 3px solid #facc15;
+    }
+    .review-text {
+      font-style: italic;
+      color: #cbd5e1;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .review-name {
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      color: #ffffff;
+    }
+    .review-stars {
+      color: #facc15;
+      margin-top: 0.5rem;
+    }
+
+    /* FAQ Section (accordion) */
+    .faq-grid {
+      max-width: 800px;
+      margin: 0 auto 4rem auto;
+    }
+    .faq-item {
+      background: #0a0a0a;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      border: 1px solid #2a2a2a;
+    }
+    .faq-question {
+      padding: 1.2rem 1.5rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.2s;
+      color: #ffffff;
+    }
+    .faq-question:hover {
+      background: #111111;
+    }
+    .faq-question i {
+      transition: 0.3s;
+      color: #facc15;
+    }
+    .faq-answer {
+      padding: 0 1.5rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: 0.3s ease;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+    .faq-item.active .faq-answer {
+      padding: 0 1.5rem 1.2rem 1.5rem;
+      max-height: 200px;
+    }
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    /* Timeline */
+    .timeline {
+      margin: 4rem 0;
+    }
+    .timeline-item {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      align-items: flex-start;
+    }
+    .timeline-year {
+      min-width: 100px;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #facc15;
+    }
+    .timeline-content {
+      background: #0a0a0a;
+      padding: 1rem 1.5rem;
+      border-radius: 1rem;
+      flex: 1;
+      border: 1px solid #2a2a2a;
+      color: #cbd5e1;
+    }
+    .timeline-content strong {
+      color: #facc15;
+    }
+
+    /* Final CTA with background image */
+    .final-cta {
+      position: relative;
+      background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('ev6.webp');
+      background-size: cover;
+      background-position: center;
+      border-radius: 2rem;
+      padding: 4rem 2rem;
+      text-align: center;
+      color: white;
+      margin-top: 3rem;
+      border: 1px solid #facc15;
+    }
+    .final-cta h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .final-cta p {
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+    .final-cta-btn {
+      display: inline-block;
+      background: #facc15;
+      color: #000000;
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .final-cta-btn:hover {
+      background: #eab308;
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    .simple-footer {
+      background: #000000;
+      color: #94a3b8;
+      text-align: center;
+      padding: 2rem;
+      border-top: 4px solid #facc15;
+      margin-top: 2rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 2rem 1rem; }
+      .timeline-item { flex-direction: column; gap: 0.5rem; }
+      .timeline-year { min-width: auto; }
+      .stats-grid { gap: 1rem; }
+      .stat-item h2 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Hero Video | Innovation · Community · Creativity · Impact</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+      background-color: #000000;
+      color: #f0f0f0;
+      scroll-behavior: smooth;
+    }
+
+    /* ========= HERO SECTION – VIDEO BACKGROUND ========= */
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 880px;
+      width: 90%;
+      text-align: center;
+      padding: 2rem;
+      animation: fadeUp 0.9s ease-out;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFFFFF, #FFD966, #FFB347);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-content p {
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      line-height: 1.5;
+      color: #eeeeee;
+      max-width: 650px;
+      margin: 0 auto 2rem auto;
+      font-weight: 500;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 60px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      font-family: inherit;
+      background: none;
+    }
+
+    .btn-primary {
+      background: #FFB347;
+      color: #0a0a0a;
+      box-shadow: 0 6px 18px rgba(255, 180, 71, 0.3);
+      border-color: #FFB347;
+    }
+
+    .btn-primary:hover {
+      background: #ffc46b;
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px rgba(255, 180, 71, 0.4);
+    }
+
+    .btn-outline {
+      border: 1.5px solid #FFB347;
+      color: #FFB347;
+      background: transparent;
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 180, 71, 0.15);
+      transform: translateY(-3px);
+      border-color: #ffcd82;
+      color: #ffcd82;
+    }
+
+    /* ========= STACKED TOPICS SECTION (4 different topics, no overlap, mobile fixed) ========= */
+    .topics-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem 2rem;
+      background: #000000;
+    }
+
+    .section-badge {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 180, 71, 0.12);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #FFB347;
+      border: 0.5px solid rgba(255, 180, 71, 0.3);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.6rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(120deg, #ffffff, #FFD966);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: #bbbbbb;
+      max-width: 680px;
+      margin: 0 auto 3rem auto;
+      font-size: 1.05rem;
+      line-height: 1.4;
+    }
+
+    /* STACKED CARDS - VERTICAL, NO OVERLAP, MOBILE SAFE */
+    .stacked-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+    }
+
+    .topic-card {
+      background: #0c0c0c;
+      border-radius: 2rem;
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      transition: all 0.3s ease;
+      border: 1px solid #1f1f1f;
+      box-shadow: 0 15px 35px -12px rgba(0, 0, 0, 0.6);
+    }
+
+    .topic-card:hover {
+      border-color: #FFB34760;
+      transform: translateY(-4px);
+      background: #111111;
+    }
+
+    .card-media {
+      flex: 1.2;
+      min-width: 240px;
+      max-height: 260px;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .topic-card:hover .card-media img {
+      transform: scale(1.02);
+    }
+
+    .card-info {
+      flex: 2;
+      padding: 2rem 2rem 2rem 2.2rem;
+    }
+
+    .topic-icon {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .topic-icon span {
+      font-size: 2rem;
+    }
+
+    .topic-icon h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, #e0e0e0);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .card-info p {
+      color: #c0c0c0;
+      line-height: 1.5;
+      margin: 0.8rem 0 1rem 0;
+      font-size: 1rem;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-top: 0.8rem;
+    }
+
+    .stat {
+      background: #161616;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #FFB347;
+      border: 0.5px solid #2a2a2a;
+    }
+
+    /* Alternating layout */
+    .topic-card.reverse {
+      flex-direction: row-reverse;
+    }
+
+    /* ========= RESPONSIVE: MOBILE FIX (NO OVERLAP) ========= */
+    @media (max-width: 780px) {
+      .topic-card, .topic-card.reverse {
+        flex-direction: column;
+      }
+      .card-media {
+        width: 100%;
+        max-height: 220px;
+      }
+      .card-info {
+        padding: 1.6rem;
+      }
+      .section-title {
+        font-size: 2rem;
+      }
+      .topics-section {
+        padding: 3rem 1.2rem;
+      }
+      .btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+      }
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card-info {
+        padding: 1.2rem;
+        
+      }
+      .topic-icon h3 {
+        font-size: 1.4rem;
+      }
+      .stat-row {
+        gap: 0.8rem;
+      }
+      .stat {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.8rem;
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid #151515;
+      font-size: 0.8rem;
+      color: #5e5e5e;
+      background: #000000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO SECTION with VIDEO BACKGROUND + TWO BUTTONS -->
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline poster="99278-653943177_medium.mp4">
+      <source src="99278-653943177_medium.mp4" type="video/mp4">
+      
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Shape the Future</h1>
+      <p>Where bold ideas meet real action. Explore the pillars that drive us forward.</p>
+      <div class="btn-group">
+      <a href="404.html">  <button class="btn btn-primary" id="exploreBtn">Explore Topics →</button></a>
+      <a href="404.html">  <button class="btn btn-outline" id="vibeBtn">Join the Movement</button></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACKED TOPICS SECTION: 4 DIFFERENT TOPICS (Innovation, Community, Creativity, Impact) -->
+  <section class="topics-section">
+    <div class="section-badge">
+      <div class="badge">⚡ stacked • core pillars</div>
+    </div>
+    <h2 class="section-title">Our Driving Forces</h2>
+    <div class="section-sub">Four pillars that define our purpose — innovation, community, creativity, and lasting impact.</div>
+
+    <div class="stacked-cards">
+      <!-- Topic 1: Innovation -->
+      <div class="topic-card">
+        <div class="card-media">
+          <img src="ev20.webp" alt="Innovation - future technology" loading="lazy">
+        </div>
+        <div class="card-info">
+          <div class="topic-icon">
+            <span>🚀</span>
+            <h3>Innovation</h3>
+          </div>
+          <p>Pushing boundaries with cutting-edge solutions. We embrace emerging tech, bold experimentation, and forward-thinking strategies to solve real-world problems.</p>
+          <div class="stat-row">
+            <span class="stat">⚡ 15+ R&D projects</span>
+            <span class="stat">🔬 98% prototype success</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 2: Community (reverse) -->
+      <div class="topic-card reverse">
+        <div class="card-media">
+          <img src="cinema.webp" alt="Community - people connecting" loading="lazy">
+        </div>
+        <div class="card-info">
+          <div class="topic-icon">
+            <span>👥</span>
+            <h3>Community</h3>
+          </div>
+          <p>Building bridges across cultures and backgrounds. We foster inclusive spaces where every voice matters and collaboration drives collective growth.</p>
+          <div class="stat-row">
+            <span class="stat">🌍 50k+ active members</span>
+            <span class="stat">🤝 200+ events yearly</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 3: Creativity -->
+      <div class="topic-card">
+        <div class="card-media">
+          <img src="bengaluru.webp" alt="Creativity - artistic expression" loading="lazy">
+        </div>
+        <div class="card-info">
+          <div class="topic-icon">
+            <span>🎨</span>
+            <h3>Creativity</h3>
+          </div>
+          <p>Unleashing imagination through design, storytelling, and art. We believe creativity is the spark that turns ordinary into extraordinary.</p>
+          <div class="stat-row">
+            <span class="stat">✨ 1,200+ creative projects</span>
+            <span class="stat">🏆 award-winning</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 4: Impact (reverse) -->
+      <div class="topic-card reverse">
+        <div class="card-media">
+          <img src="bowler.webp" alt="Impact - making a difference" loading="lazy">
+        </div>
+        <div class="card-info">
+          <div class="topic-icon">
+            <span>💡</span>
+            <h3>Impact</h3>
+          </div>
+          <p>Measurable change that matters. From sustainability to education, we focus on initiatives that leave a lasting positive footprint.</p>
+          <div class="stat-row">
+            <span class="stat">📈 +340% community reach</span>
+            <span class="stat">🌱 carbon-neutral events</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 — video background hero + 4 core topics | fully responsive, no overlapping
+  </footer>
+
+  <script>
+    (function() {
+      const exploreBtn = document.getElementById('exploreBtn');
+      const vibeBtn = document.getElementById('vibeBtn');
+
+      if (exploreBtn) {
+        exploreBtn.addEventListener('click', () => {
+          const topicsSection = document.querySelector('.topics-section');
+          if (topicsSection) {
+            topicsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      }
+
+      if (vibeBtn) {
+        vibeBtn.addEventListener('click', () => {
+          alert('🚀 Join the movement — stay tuned for upcoming initiatives!');
+        });
+      }
+
+      const heroVideo = document.querySelector('.hero-video');
+      if (heroVideo) {
+        heroVideo.play().catch(e => console.log("autoplay prevented"));
+      }
+    })();
+  </script>
+</body>
+</html>
+</body>
+</html>
+
+
+  <!-- Stats with AOS counter (yellow background) -->
+  <div class="stats-section" data-aos="zoom-in-up">
+    <div class="stats-grid">
+      <div class="stat-item"><h2 class="counter" data-target="15">0</h2><p>Million+ Users</p></div>
+      <div class="stat-item"><h2 class="counter" data-target="750">0</h2><p>M+ Daily Interactions</p></div>
+      <div class="stat-item"><h2 class="counter" data-target="4.9">0</h2><p>★ App Store Rating</p></div>
+      <div class="stat-item"><h2 class="counter" data-target="180">0</h2><p>Countries</p></div>
+    </div>
+  </div>
+
+  <!-- Core Values -->
+  <h2 class="section-title" data-aos="fade-up">Our <span>Core Values</span></h2>
+  <div class="values-grid">
+    <div class="value-card" data-aos="flip-left"><div class="value-icon"><i class="fas fa-hand-peace"></i></div><h4>Authenticity</h4><p>Be real, be you. No filters for your spirit. We celebrate raw, honest stories.</p></div>
+    <div class="value-card" data-aos="flip-left" data-aos-delay="100"><div class="value-icon"><i class="fas fa-lightbulb"></i></div><h4>Creativity</h4><p>Ideas have no limits. We provide tools that turn imagination into reality.</p></div>
+    <div class="value-card" data-aos="flip-left" data-aos-delay="200"><div class="value-icon"><i class="fas fa-heart"></i></div><h4>Community</h4><p>Together we rise. Safe, supportive, and vibrant — our users are family.</p></div>
+    <div class="value-card" data-aos="flip-left" data-aos-delay="300"><div class="value-icon"><i class="fas fa-rocket"></i></div><h4>Innovation</h4><p>Always evolving. We push boundaries to keep you ahead of the curve.</p></div>
+  </div>
+
+  <!-- Company Profiles (detailed team) -->
+  <h2 class="section-title" data-aos="fade-up">Meet the <span>Leadership</span></h2>
+  <div class="team-grid">
+    <div class="team-card" data-aos="zoom-in">
+      <div class="team-img" style="background-image:url('hr12.webp')"></div>
+      <div class="team-info">
+        <h4>Emma Richards</h4>
+        <div class="team-role">CEO & Co‑Founder</div>
+        <div class="team-bio">Emma is a visionary entrepreneur with 15+ years in social tech. She believes in ethical algorithms and user-first design.</div>
+        <div class="team-social"><a href="404.html"><i class="fab fa-twitter"></i></a><a href="404.html"><i class="fab fa-linkedin"></i></a><a href="404.html"><i class="fab fa-instagram"></i></a></div>
+      </div>
+    </div>
+    <div class="team-card" data-aos="zoom-in" data-aos-delay="100">
+      <div class="team-img" style="background-image:url('hr13.webp')"></div>
+      <div class="team-info">
+        <h4>Marcus Chen</h4>
+        <div class="team-role">CTO & Co‑Founder</div>
+        <div class="team-bio">Marcus leads engineering with a passion for scalable systems and AI-driven discovery. Previously at Google.</div>
+        <div class="team-social"><a href="404.html"><i class="fab fa-twitter"></i></a><a href="404.html"><i class="fab fa-github"></i></a><a href="404.html"><i class="fab fa-linkedin"></i></a></div>
+      </div>
+    </div>
+    <div class="team-card" data-aos="zoom-in" data-aos-delay="200">
+      <div class="team-img" style="background-image:url('hr1.webp')"></div>
+      <div class="team-info">
+        <h4>Sofia Lopez</h4>
+        <div class="team-role">Head of Community</div>
+        <div class="team-bio">Sofia built our global ambassador program. She ensures every user feels seen, heard, and valued.</div>
+        <div class="team-social"><a href="404.html"><i class="fab fa-instagram"></i></a><a href="404.html"><i class="fab fa-twitter"></i></a><a href="404.html"><i class="fab fa-tiktok"></i></a></div>
+      </div>
+    </div>
+    <div class="team-card" data-aos="zoom-in" data-aos-delay="300">
+      <div class="team-img" style="background-image:url('hr23.webp')"></div>
+      <div class="team-info">
+        <h4>Alex Rivera</h4>
+        <div class="team-role">Creative Director</div>
+        <div class="team-bio">Alex brings viral trends to life. Award-winning content strategist and former YouTube creator.</div>
+        <div class="team-social"><a href="404.html"><i class="fab fa-dribbble"></i></a><a href="404.html"><i class="fab fa-behance"></i></a><a href="404.html"><i class="fab fa-instagram"></i></a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subscriber Reviews -->
+  <h2 class="section-title" data-aos="fade-up">What Our <span>Community Says</span></h2>
+  <div class="reviews-grid">
+    <div class="review-card" data-aos="fade-up">
+      <div class="review-avatar" style="background-image:url('hr1.webp')"></div>
+      <div class="review-text">“Stackly gave me a platform to express myself freely. The engagement is real, and the community is super supportive!”</div>
+      <div class="review-name">— Jessica M.</div>
+      <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+    </div>
+    <div class="review-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="review-avatar" style="background-image:url('hr2.webp')"></div>
+      <div class="review-text">“Best decision ever to join Stackly. I’ve grown my audience by 200% in just 3 months. The tools are unmatched.”</div>
+      <div class="review-name">— David K.</div>
+      <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+    </div>
+    <div class="review-card" data-aos="fade-up" data-aos-delay="200">
+      <div class="review-avatar" style="background-image:url('hr3.webp')"></div>
+      <div class="review-text">“The yellow vibe is real! I love how Stackly prioritizes creators. Finally, a social media that cares.”</div>
+      <div class="review-name">— Priya S.</div>
+      <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+    </div>
+  </div>
+
+  <!-- Short FAQs (accordion) -->
+  <h2 class="section-title" data-aos="fade-up">Frequently Asked <span>Questions</span></h2>
+  <div class="faq-grid">
+    <div class="faq-item" data-aos="fade-up">
+      <div class="faq-question">What makes Stackly different from other platforms? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-answer">Stackly focuses on authentic engagement, not vanity metrics. Our algorithm rewards creativity, and we offer creator-friendly monetization tools from day one.</div>
+    </div>
+    <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+      <div class="faq-question">Is Stackly free to use? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-answer">Yes! The core features are completely free. We offer premium plans for creators who want advanced analytics, promotion tools, and priority support.</div>
+    </div>
+    <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+      <div class="faq-question">How do I grow my audience on Stackly? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-answer">Use relevant hashtags, engage with the community, post consistently, and leverage our “Trending Topics” feature. Our discovery engine is built to help new voices shine.</div>
+    </div>
+    <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+      <div class="faq-question">Is my data safe on Stackly? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-answer">Absolutely. We never sell your personal data. We use industry-leading encryption and give you full control over your privacy settings.</div>
+    </div>
+  </div>
+
+  <!-- Our Journey Timeline -->
+  <h2 class="section-title" data-aos="fade-up">Our <span>Journey</span></h2>
+  <div class="timeline">
+    <div class="timeline-item" data-aos="fade-right"><div class="timeline-year">2020</div><div class="timeline-content"><strong>Idea born</strong> – Stackly started in a small garage with 3 founders and a dream.</div></div>
+    <div class="timeline-item" data-aos="fade-right" data-aos-delay="100"><div class="timeline-year">2021</div><div class="timeline-content"><strong>Beta launch</strong> – First 10,000 users join our early access program.</div></div>
+    <div class="timeline-item" data-aos="fade-right" data-aos-delay="200"><div class="timeline-year">2022</div><div class="timeline-content"><strong>Series A</strong> – Raised $15M to expand globally. Reached 2M users.</div></div>
+    <div class="timeline-item" data-aos="fade-right" data-aos-delay="300"><div class="timeline-year">2024</div><div class="timeline-content"><strong>Reels & Stories</strong> – Launched viral video features. Hit 10M users.</div></div>
+    <div class="timeline-item" data-aos="fade-right" data-aos-delay="400"><div class="timeline-year">2026</div><div class="timeline-content"><strong>Stackly today</strong> – 15M+ users, 180 countries, and just getting started.</div></div>
+  </div>
+
+  <!-- Final CTA with background image -->
+  <div class="final-cta" data-aos="zoom-in">
+    <h3>Ready to make your voice heard?</h3>
+    <p>Join millions of creators who already call Stackly home. Let's build something amazing together.</p>
+    <a href="404.html" class="final-cta-btn">Get Started Now →</a>
+  </div>
+</div>
+
+<!-- Scripts: AOS + Counter animation + FAQ accordion -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  // Initialize AOS
+  AOS.init({
+    duration: 800,
+    once: true,
+    offset: 100
+  });
+
+  // Counter animation
+  const counters = document.querySelectorAll('.counter');
+  const speed = 200;
+  const animateCounters = () => {
+    counters.forEach(counter => {
+      const target = parseFloat(counter.getAttribute('data-target'));
+      let current = 0;
+      const increment = target / speed;
+      const updateCounter = () => {
+        if (current < target) {
+          current += increment;
+          counter.innerText = Math.floor(current);
+          setTimeout(updateCounter, 20);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCounter();
+    });
+  };
+  
+  // Trigger counters when stats section comes into view
+  const statsSection = document.querySelector('.stats-section');
+  let animated = false;
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !animated) {
+      animateCounters();
+      animated = true;
+      observer.unobserve(statsSection);
+    }
+  }, { threshold: 0.3 });
+  if (statsSection) observer.observe(statsSection);
+
+  // FAQ Accordion
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    question.addEventListener('click', () => {
+      item.classList.toggle('active');
+    });
+  });
+</script>
+</body>
+</html>
+</body>
+</html>
+  
+<!-- Stackly Footer - Enhanced with more content (unique classes) -->
+<footer class="stackly-footer-wrapper">
+  <div class="stackly-footer-container">
+    <div class="stackly-footer-grid">
+      
+      <!-- Column 1: Brand + Logo + Social proof -->
+      <div class="stackly-footer-brand">
+        <div class="stackly-footer-logo">
+          <img src="stacklylogo (1).webp" alt="Stackly Logo" class="stackly-footer-logo-img" width="148" height="48">
+          <span class="stackly-footer-logo-text"></span>
+        </div>
+        <p class="stackly-footer-description">Where communities rise. Connect, create, and share your story across all major platforms. Yellow vibe — bold identity.</p>
+        <div class="stackly-footer-stats">
+          <span><i class="fas fa-users"></i> 250K+ Users</span>
+          <span><i class="fas fa-globe"></i> 15+ Countries</span>
+        </div>
+        <div class="stackly-footer-tagline">
+          <i class="fas fa-bolt"></i>
+          <span>#StacklySocial | #DigitalWave</span>
+        </div>
+        <!-- App badges -->
+        <div class="stackly-footer-app-badges">
+          <a href="404.html"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" style="height: 40px;"></a>
+          <a href="404.html"><img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on App Store" style="height: 40px;"></a>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="stackly-footer-links">
+        <h4 class="stackly-footer-heading">Explore</h4>
+        <ul class="stackly-footer-nav">
+          <li><a href="index.html"><i class="fas fa-hashtag"></i> Home</a></li>
+          <li><a href="events.html"><i class="fas fa-users"></i> Events</a></li>
+          <li><a href="posts.html"><i class="fas fa-chart-line"></i> Posts</a></li>
+          <li><a href="about.html"><i class="fas fa-shield-alt"></i> About</a></li>
+          <li><a href="contact.html"><i class="fas fa-headset"></i> Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Resources (new) -->
+      <div class="stackly-footer-resources">
+        <h4 class="stackly-footer-heading">Resources</h4>
+        <ul class="stackly-footer-nav">
+          <li><a href="404.html"><i class="fas fa-blog"></i> Blog</a></li>
+          <li><a href="404.html"><i class="fas fa-chalkboard-user"></i> Creator Hub</a></li>
+          <li><a href="404.html"><i class="fas fa-circle-info"></i> Help Center</a></li>
+          <li><a href="404.html"><i class="fas fa-bullhorn"></i> Press Kit</a></li>
+          <li><a href="404.html"><i class="fas fa-code"></i> Developers</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Newsletter + Social Icons -->
+      <div class="stackly-footer-newsletter">
+        <h4 class="stackly-footer-heading">Subscribe & Go viral</h4>
+        <div class="stackly-footer-form">
+          <div class="stackly-footer-input-group">
+            <input type="email" id="stacklyFooterEmail" class="stackly-footer-email-input" placeholder="Your email address *" required>
+            <button id="stacklyFooterSubscribeBtn" class="stackly-footer-subscribe-btn"><i class="fas fa-paper-plane"></i> Subscribe now</button>
+            <span id="stacklyFooterErrorMsg" class="stackly-footer-error-msg"></span>
+          </div>
+          <div class="stackly-footer-follow-text">
+            <i class="fas fa-gift"></i> Get exclusive updates & early access
+          </div>
+        </div>
+        <div class="stackly-footer-social-icons">
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-linkedin-in"></i></a>
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-youtube"></i></a>
+         
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar with back-to-top and more legal links -->
+    <div class="stackly-footer-bottom">
+      <div class="stackly-footer-copyright">
+        <i class="far fa-copyright"></i> 2026 Stackly — All social rights reserved. <i class="fas fa-heart" style="color:#facc15;"></i>
+      </div>
+      <div class="stackly-footer-legal">
+        <a href="404.html">Privacy</a>
+        <a href="404.html">Terms</a>
+        <a href="404.html">Cookies</a>
+        <a href="404.html">Accessibility</a>
+        <a href="404.html"><i class="fab fa-discord"></i> Discord</a>
+        <a href="index.html" id="stacklyBackToTop"><i class="fas fa-arrow-up"></i> Top</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* ---------- STACKLY FOOTER UNIQUE STYLES (no overlap) ---------- */
+  .stackly-footer-wrapper {
+    background: #000000;
+    color: #ffffff;
+    border-top: 4px solid #facc15;
+    margin-top: 2rem;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  .stackly-footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 1.5rem;
+  }
+  .stackly-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .stackly-footer-brand, .stackly-footer-links, .stackly-footer-resources, .stackly-footer-newsletter {
+    text-align: left;
+  }
+  .stackly-footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+  .stackly-footer-logo-img {
+    width: 148px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+  .stackly-footer-logo-text {
+    font-size: 1.7rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #facc15 0%, #ffde6e 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .stackly-footer-description {
+    line-height: 1.5;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+  }
+  .stackly-footer-stats {
+    display: flex;
+    gap: 1rem;
+    margin: 0.8rem 0;
+    font-size: 0.8rem;
+    color: #facc15;
+  }
+  .stackly-footer-stats i {
+    margin-right: 4px;
+  }
+  .stackly-footer-tagline {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.75rem;
+    background: rgba(250, 204, 21, 0.12);
+    padding: 0.3rem 0.9rem;
+    border-radius: 40px;
+    width: fit-content;
+    color: #facc15;
+    margin-bottom: 1rem;
+  }
+  .stackly-footer-app-badges {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-top: 0.8rem;
+  }
+  .stackly-footer-app-badges img {
+    height: 38px;
+    width: auto;
+    border-radius: 8px;
+    transition: transform 0.2s;
+  }
+  .stackly-footer-app-badges img:hover {
+    transform: scale(1.02);
+  }
+  .stackly-footer-heading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    position: relative;
+    display: inline-block;
+    color: #ffffff;
+  }
+  .stackly-footer-heading:after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 36px;
+    height: 3px;
+    background: #facc15;
+    border-radius: 2px;
+  }
+  .stackly-footer-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .stackly-footer-nav a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+  }
+  .stackly-footer-nav a i {
+    font-size: 0.7rem;
+    color: #facc15;
+  }
+  .stackly-footer-nav a:hover {
+    color: #facc15;
+    transform: translateX(4px);
+  }
+  .stackly-footer-social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+  .stackly-footer-social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 1.1rem;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    border: 1px solid #333;
+  }
+  .stackly-footer-social-icon:hover {
+    transform: translateY(-4px);
+    background: #facc15;
+    color: #000000;
+    border-color: #facc15;
+  }
+  .stackly-footer-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .stackly-footer-email-input {
+    background: #1c1c1c;
+    border: 1px solid #333;
+    padding: 0.7rem 1rem;
+    border-radius: 60px;
+    font-size: 0.85rem;
+    color: white;
+    outline: none;
+    width: 100%;
+    transition: all 0.2s;
+  }
+  .stackly-footer-email-input:focus {
+    border-color: #facc15;
+    box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.3);
+  }
+  .stackly-footer-subscribe-btn {
+    background: #facc15;
+    color: #000000;
+    border: none;
+    padding: 0.7rem;
+    border-radius: 60px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    transition: all 0.2s;
+  }
+  .stackly-footer-subscribe-btn:hover {
+    background: #ffde34;
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
+  }
+  .stackly-footer-error-msg {
+    font-size: 0.7rem;
+    color: #facc15;
+    margin-top: 4px;
+    display: block;
+    text-align: left;
+  }
+  .stackly-footer-follow-text {
+    font-size: 0.7rem;
+    margin-top: 0.8rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stackly-footer-bottom {
+    border-top: 1px solid rgba(250, 204, 21, 0.2);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.75rem;
+  }
+  .stackly-footer-copyright {
+    color: #94a3b8;
+  }
+  .stackly-footer-copyright i {
+    color: #facc15;
+  }
+  .stackly-footer-legal {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .stackly-footer-legal a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .stackly-footer-legal a:hover {
+    color: #facc15;
+  }
+  @media (max-width: 880px) {
+    .stackly-footer-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+  }
+  @media (max-width: 780px) {
+    .stackly-footer-container { padding: 1.8rem 1.2rem; }
+    .stackly-footer-grid { gap: 1.5rem; }
+    .stackly-footer-logo-text { font-size: 1.3rem; }
+  }
+  @media (max-width: 550px) {
+    .stackly-footer-bottom { flex-direction: column; text-align: center; }
+    .stackly-footer-legal { justify-content: center; }
+    .stackly-footer-stats { flex-direction: column; gap: 0.3rem; }
+  }
+</style>
+
+<script>
+  // Unique script for Stackly footer (no global conflicts)
+  (function() {
+    const subscribeBtn = document.getElementById('stacklyFooterSubscribeBtn');
+    const emailInput = document.getElementById('stacklyFooterEmail');
+    const errorSpan = document.getElementById('stacklyFooterErrorMsg');
+    const backToTop = document.getElementById('stacklyBackToTop');
+
+    function isValidEmail(email) {
+      if (!email || email.trim() === '') return false;
+      const emailRegex = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/;
+      return emailRegex.test(email.trim());
+    }
+
+    function handleSubscribe(event) {
+      event.preventDefault();
+      const emailValue = emailInput.value.trim();
+      errorSpan.innerText = '';
+
+      if (!emailValue) {
+        errorSpan.innerText = '❌ Email address is mandatory.';
+        emailInput.focus();
+        return;
+      }
+
+      if (!isValidEmail(emailValue)) {
+        errorSpan.innerText = '⚠️ Please enter a valid email (e.g., name@example.com)';
+        emailInput.focus();
+        return;
+      }
+
+      // Redirect to custom 404 page
+      window.location.href = '404.html';
+    }
+
+    if (subscribeBtn) {
+      subscribeBtn.addEventListener('click', handleSubscribe);
+      emailInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleSubscribe(e);
+        }
+      });
+    }
+
+    // Back to top functionality
+    if (backToTop) {
+      backToTop.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  })();
+</script>
