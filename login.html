@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stackly Social – Login</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", -apple-system, sans-serif;
+        }
+
+        :root {
+            --yellow-primary: #facc15;
+            --yellow-dark: #eab308;
+            --yellow-light: #fef08a;
+            --black-dark: #000000;
+            --black-medium: #0a0a0a;
+            --black-light: #1a1a1a;
+            --white: #ffffff;
+            --white-dark: #f5f5f5;
+            --gray-light: #e0e0e0;
+            --gray-medium: #9e9e9e;
+            --border-light: #2a2a2a;
+        }
+
+        body {
+            background: var(--black-dark);
+        }
+
+        .stkly-social-wrapper {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        /* LEFT PANEL – BRANDING */
+        .stkly-social-image-panel {
+            width: 50%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.85), rgba(250,204,21,0.2)),
+                        url('digital14.webp');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stkly-social-image-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(250,204,21,0.05) 0px,
+                rgba(250,204,21,0.05) 15px,
+                transparent 15px,
+                transparent 30px
+            );
+            pointer-events: none;
+        }
+
+        .stkly-social-logo {
+            font-size: 52px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #fff, var(--yellow-primary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .stkly-social-subtitle {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 1px;
+            color: var(--yellow-primary);
+        }
+
+        .stkly-social-heading {
+            font-size: 32px;
+            font-weight: 700;
+            max-width: 450px;
+            line-height: 1.3;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+        }
+
+        .stkly-social-features {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .stkly-social-feature {
+            text-align: center;
+        }
+
+        .stkly-social-feature i {
+            width: 36px;
+            height: 36px;
+            color: var(--yellow-primary);
+            margin-bottom: 10px;
+        }
+
+        .stkly-social-feature p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* RIGHT PANEL – FORM */
+        .stkly-social-form-panel {
+            width: 50%;
+            background-color: var(--black-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+
+        .stkly-social-form-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--yellow-primary), var(--yellow-light), var(--yellow-primary));
+        }
+
+        .stkly-social-form-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .stkly-social-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .stkly-social-header h1 {
+            font-size: 32px;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .stkly-social-header p {
+            color: var(--gray-medium);
+        }
+
+        .stkly-social-header a {
+            color: var(--yellow-primary) !important;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .stkly-social-header a:hover {
+            text-decoration: underline;
+        }
+
+        .stkly-social-form-group {
+            margin-bottom: 20px;
+        }
+
+        .stkly-social-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--white);
+        }
+
+        .stkly-social-input,
+        .stkly-social-select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--black-light);
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            background-color: var(--black-medium);
+            color: var(--white);
+            transition: all 0.3s;
+        }
+
+        .stkly-social-input:focus,
+        .stkly-social-select:focus {
+            border-color: var(--yellow-primary);
+            box-shadow: 0 0 0 3px rgba(250,204,21,0.2);
+        }
+
+        .stkly-social-input::placeholder {
+            color: var(--gray-medium);
+        }
+
+        .stkly-social-select option {
+            background-color: var(--black-medium);
+            color: var(--white);
+        }
+
+        .stkly-social-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 24px;
+            color: var(--gray-medium);
+        }
+
+        .stkly-social-meta label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .stkly-social-meta input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--yellow-primary);
+        }
+
+        .stkly-social-meta a {
+            color: var(--yellow-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .stkly-social-meta a:hover {
+            text-decoration: underline;
+        }
+
+        .stkly-social-btn-submit {
+            position: relative;
+            width: 100%;
+            height: 54px;
+            background-color: var(--yellow-primary);
+            color: var(--black-dark);
+            border: none;
+            border-radius: 60px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stkly-social-btn-submit::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background-color: var(--yellow-dark);
+            z-index: -1;
+            transition: height 0.4s ease;
+        }
+
+        .stkly-social-btn-submit:hover::before {
+            height: 100%;
+        }
+
+        .stkly-social-btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(250,204,21,0.4);
+        }
+
+        .stkly-social-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 30px 0;
+            color: var(--gray-medium);
+            font-size: 13px;
+        }
+
+        .stkly-social-divider::before,
+        .stkly-social-divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid var(--black-light);
+        }
+
+        .stkly-social-divider:not(:empty)::before {
+            margin-right: 15px;
+        }
+
+        .stkly-social-divider:not(:empty)::after {
+            margin-left: 15px;
+        }
+
+        .stkly-social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stkly-social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border: 2px solid var(--black-light);
+            border-radius: 60px;
+            background: var(--black-medium);
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            gap: 10px;
+            color: var(--white);
+        }
+
+        .stkly-social-btn:hover {
+            background: var(--yellow-primary);
+            color: var(--black-dark);
+            border-color: var(--yellow-primary);
+            transform: translateY(-2px);
+        }
+
+        .stkly-social-btn i {
+            width: 18px;
+            height: 18px;
+        }
+
+        .stkly-social-back-btn {
+            margin-top: 20px;
+            background: transparent;
+            border: 2px solid var(--yellow-primary);
+            color: var(--yellow-primary);
+            padding: 12px;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .stkly-social-back-btn:hover {
+            background: var(--yellow-primary);
+            color: var(--black-dark);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .stkly-social-wrapper {
+                flex-direction: column;
+            }
+            .stkly-social-image-panel {
+                width: 100%;
+                min-height: 320px;
+                padding: 30px 20px;
+            }
+            .stkly-social-form-panel {
+                width: 100%;
+                padding: 40px 20px;
+            }
+            .stkly-social-features {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .stkly-social-heading {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stkly-social-grid {
+                grid-template-columns: 1fr;
+            }
+            .stkly-social-logo {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stkly-social-wrapper">
+        <!-- LEFT BRANDING PANEL -->
+        <section class="stkly-social-image-panel">
+            <div class="stkly-social-logo">STACKLY<span style="color:var(--yellow-primary);">.</span></div>
+            <div class="stkly-social-subtitle">Social Media Reimagined</div>
+            <h2 class="stkly-social-heading">
+                Connect, Create, and Go Viral with Stackly
+            </h2>
+            <div class="stkly-social-features">
+                <div class="stkly-social-feature">
+                    <i data-lucide="users"></i>
+                    <p>50M+ Users</p>
+                </div>
+                <div class="stkly-social-feature">
+                    <i data-lucide="video"></i>
+                    <p>Reels & Stories</p>
+                </div>
+                <div class="stkly-social-feature">
+                    <i data-lucide="trending-up"></i>
+                    <p>Viral Trends</p>
+                </div>
+            </div>
+            <button type="button" class="stkly-social-back-btn" onclick="window.location.href='index.html'">
+                ← BACK TO HOME
+            </button>
+        </section>
+
+        <!-- RIGHT LOGIN FORM -->
+        <section class="stkly-social-form-panel">
+            <div class="stkly-social-form-container">
+                <div class="stkly-social-header">
+                    <h1>Welcome Back</h1>
+                    <p>
+                        New to Stackly?
+                        <a href="getstaterd.html">Create Account</a>
+                    </p>
+                </div>
+
+                <form id="social-login-form">
+                    <div class="stkly-social-form-group">
+                        <label class="stkly-social-label">Login as</label>
+                        <select class="stkly-social-select" id="role" required>
+                           
+                            <option value="Creator">Creator</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div class="stkly-social-form-group">
+                        <label class="stkly-social-label">Email Address</label>
+                        <input type="email" class="stkly-social-input" id="email" placeholder="you@example.com" autocomplete="off" required />
+                    </div>
+
+                    <div class="stkly-social-form-group">
+                        <label class="stkly-social-label">Password</label>
+                        <input type="password" class="stkly-social-input" id="password" placeholder="••••••••" autocomplete="new-password" required />
+                    </div>
+
+                    <div class="stkly-social-meta">
+                        <label><input type="checkbox" /> Remember me</label>
+                        <a href="404.html">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="stkly-social-btn-submit">SIGN IN →</button>
+
+                    <div class="stkly-social-divider">Stackly-@2026</div>
+
+                    <div class="stkly-social-grid">
+                        
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        document.getElementById("social-login-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const role = document.getElementById("role").value;
+
+            if (!email || !document.getElementById("password").value) {
+                alert("Please fill all fields.");
+                return;
+            }
+
+            const userData = {
+                name: role === "Admin" ? "Admin User" : (role === "Creator" ? "Creator" : "User"),
+                email: email,
+                role: role,
+                loggedIn: true
+            };
+            localStorage.setItem("stacklyUser", JSON.stringify(userData));
+
+            // Redirect based on role (you can change these URLs as needed)
+            if (role === "Admin") {
+                window.location.href = "admindashboard.html";
+            } else if (role === "Creator") {
+                window.location.href = "creatordashboard.html";
+            } else {
+                window.location.href = "feed.html";
+            }
+        });
+
+        // Reset form on load
+        window.onload = () => {
+            document.getElementById("social-login-form").reset();
+        };
+    </script>
+</body>
+</html>

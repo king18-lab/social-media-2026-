@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <title>Stackly | Modern Responsive Navbar + Services</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f7fb;
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    /* ----- STICKY NAVBAR (CLEAN, FIXED Z-INDEX) ----- */
+    .stackly-navbar {
+      background: #fff;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0 24px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1480px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ----- LOGO STYLES ----- */
+    .stackly-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      line-height: 0;
+    }
+
+    .logo-img {
+      width: 200px;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      transition: 0.2s;
+    }
+
+    /* ----- DESKTOP CIRCLE MENU (sleek & interactive) ----- */
+    .circle-nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .circle-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      cursor: pointer;
+      min-width: 68px;
+    }
+
+    .circle-icon {
+      width: 56px;
+      height: 56px;
+      background: #f0f2f5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      margin-bottom: 6px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+    }
+
+    .circle-icon i {
+      font-size: 24px;
+      color: #1c1e21;
+      transition: 0.2s;
+    }
+
+    .circle-item span {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #1c1e21;
+      letter-spacing: -0.2px;
+    }
+
+    .circle-item:hover .circle-icon {
+      background: #ffe6df;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px rgba(217, 104, 70, 0.15);
+    }
+
+    .circle-item:hover i {
+      color: #ffbf00;
+    }
+
+    .circle-item:hover span {
+      color: #ffbf00;
+    }
+
+    .circle-item.get-started .circle-icon {
+      background: #ffbf00;
+    }
+    .circle-item.get-started .circle-icon i {
+      color: white;
+    }
+    .circle-item.get-started span {
+      font-weight: 700;
+      color: #ffbf00;
+    }
+
+    .circle-item.login .circle-icon {
+      background: #fef2ef;
+    }
+
+    /* ----- HAMBURGER BUTTON (mobile only) ----- */
+    .hamburger-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #1c1e21;
+      padding: 8px;
+      transition: 0.2s;
+      z-index: 1002;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hamburger-btn:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    /* ----- FULLSCREEN MOBILE MENU (PREMIUM OVERLAY) ----- */
+    .mobile-fullscreen-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, black 0%, #968041);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      visibility: hidden;
+      overflow-y: auto;
+      backdrop-filter: blur(2px);
+    }
+
+    .mobile-fullscreen-menu.open {
+      transform: translateX(0);
+      visibility: visible;
+    }
+
+    .close-menu-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 52px;
+      height: 52px;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 2001;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .close-menu-btn i {
+      font-size: 28px;
+      color: white;
+      transition: 0.2s;
+    }
+
+    .close-menu-btn:hover {
+      background: rgba(0, 0, 0, 0.4);
+      transform: scale(1.05);
+    }
+
+    .mobile-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      text-align: center;
+      width: 100%;
+      max-width: 300px;
+      padding: 20px;
+    }
+
+    .mobile-nav-list a {
+      text-decoration: none;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 14px 20px;
+      border-radius: 80px;
+      transition: 0.25s ease;
+      background: rgba(255, 255, 245, 0.12);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .mobile-nav-list a i {
+      font-size: 1.6rem;
+      width: 36px;
+      color: white;
+    }
+
+    .mobile-nav-list a:hover {
+      background: rgba(0, 0, 0, 0.2);
+      transform: scale(1.02);
+      color: #fff9e0;
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .mobile-menu-footer {
+      margin-top: 56px;
+      font-size: 0.8rem;
+      opacity: 0.85;
+      color: rgba(255, 255, 245, 0.9);
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 28px 80px 28px;
+    }
+
+    .hero-section {
+      background: white;
+      border-radius: 32px;
+      padding: 48px 40px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .hero-section h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1c1e21, #ffbf00);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 18px;
+    }
+
+    .hero-section p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #2d3e50;
+      margin-bottom: 24px;
+    }
+
+    .feature-grid {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .feature-card {
+      background: #f9fafc;
+      border-radius: 24px;
+      padding: 20px;
+      flex: 1;
+      min-width: 180px;
+      text-align: center;
+      transition: 0.2s;
+    }
+
+    .feature-card i {
+      font-size: 32px;
+      color: #ffbf00;
+      margin-bottom: 12px;
+    }
+
+    /* ----- RESPONSIVE (MOBILE + TABLET) ----- */
+    @media (max-width: 860px) {
+      .stackly-navbar {
+        height: 68px;
+        padding: 0 18px;
+      }
+      .circle-nav-menu {
+        display: none;
+      }
+      .hamburger-btn {
+        display: flex;
+      }
+      .logo-img {
+        width: 130px;
+      }
+      .main-content {
+        padding: 24px 20px 60px 20px;
+      }
+      .hero-section {
+        padding: 32px 24px;
+      }
+      .hero-section h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stackly-navbar {
+        height: 60px;
+        padding: 0 14px;
+      }
+      .logo-img {
+        width: 180px;
+      }
+      .mobile-nav-list a {
+        font-size: 1.4rem;
+        gap: 14px;
+        padding: 12px 18px;
+      }
+      .mobile-nav-list a i {
+        font-size: 1.3rem;
+      }
+      .close-menu-btn {
+        width: 48px;
+        height: 48px;
+        top: 18px;
+        right: 18px;
+      }
+      .close-menu-btn i {
+        font-size: 24px;
+      }
+      .hero-section h1 {
+        font-size: 1.6rem;
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY NAVBAR -->
+  <nav class="stackly-navbar">
+    <div class="nav-inner">
+      <!-- Logo with home link -->
+      <a href="index.html" class="stackly-logo" aria-label="Stackly homepage">
+        <img class="logo-img" src="stacklylogo (3).webp" alt="Stackly Logo" onerror="this.src='https://placehold.co/200x60?text=Stackly'">
+      </a>
+
+      <!-- Desktop circle navigation (visible only on desktop) -->
+      <div class="circle-nav-menu">
+        <a href="index.html" class="circle-item"><div class="circle-icon"><i class="fas fa-home"></i></div><span>Home</span></a>
+        <a href="events.html" class="circle-item"><div class="circle-icon"><i class="fas fa-calendar-alt"></i></div><span>Events</span></a>
+        <a href="posts.html" class="circle-item"><div class="circle-icon"><i class="fas fa-file-alt"></i></div><span>Posts</span></a>
+        <a href="about.html" class="circle-item"><div class="circle-icon"><i class="fas fa-info-circle"></i></div><span>About</span></a>
+        <a href="contact.html" class="circle-item"><div class="circle-icon"><i class="fas fa-envelope"></i></div><span>Contact</span></a>
+        <a href="login.html" class="circle-item login"><div class="circle-icon"><i class="fas fa-sign-in-alt"></i></div><span>Login</span></a>
+        <a href="getstarted.html" class="circle-item get-started"><div class="circle-icon"><i class="fas fa-user-plus"></i></div><span>Get Started</span></a>
+      </div>
+
+      <!-- Hamburger button (mobile only) -->
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- FULLSCREEN MOBILE MENU (covers navbar completely) -->
+  <div class="mobile-fullscreen-menu" id="mobileMenu">
+    <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="mobile-nav-list">
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="events.html"><i class="fas fa-calendar-alt"></i> Events</a>
+      <a href="posts.html"><i class="fas fa-file-alt"></i> Posts</a>
+      <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+      <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+      <a href="getstarted.html"><i class="fas fa-user-plus"></i> Get Started</a>
+    </div>
+    <div class="mobile-menu-footer">© Stackly - 2026</div>
+  </div>
+
+  
+
+  <script>
+    (function() {
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const closeMenuBtn = document.getElementById('closeMenuBtn');
+      const body = document.body;
+      const allMobileLinks = document.querySelectorAll('.mobile-nav-list a');
+      // No demo alerts — all links work normally (they have hrefs)
+
+      function openMobileMenu() {
+        if (!mobileMenu) return;
+        mobileMenu.classList.add('open');
+        body.classList.add('menu-open');
+        if (hamburgerBtn) hamburgerBtn.style.display = 'none';
+      }
+
+      function closeMobileMenu() {
+        if (!mobileMenu) return;
+        mobileMenu.classList.remove('open');
+        body.classList.remove('menu-open');
+        if (hamburgerBtn) hamburgerBtn.style.display = '';
+      }
+
+      if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (mobileMenu.classList.contains('open')) closeMobileMenu();
+          else openMobileMenu();
+        });
+      }
+
+      if (closeMenuBtn) {
+        closeMenuBtn.addEventListener('click', closeMobileMenu);
+      }
+
+      // Close menu after clicking a mobile link (but allow navigation)
+      allMobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          closeMobileMenu();
+        });
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('open')) {
+          closeMobileMenu();
+        }
+      });
+
+      function handleResize() {
+        if (window.innerWidth > 860) {
+          if (mobileMenu && mobileMenu.classList.contains('open')) closeMobileMenu();
+          if (hamburgerBtn) hamburgerBtn.style.display = '';
+        } else {
+          if (mobileMenu && !mobileMenu.classList.contains('open') && hamburgerBtn) {
+            hamburgerBtn.style.display = '';
+          } else if (mobileMenu && mobileMenu.classList.contains('open') && hamburgerBtn) {
+            hamburgerBtn.style.display = 'none';
+          }
+        }
+      }
+      window.addEventListener('resize', handleResize);
+      handleResize();
+    })();
+  </script>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #000000;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Hero Section */
+    .events-hero {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url('pavan6.webp');
+      background-size: cover;
+      background-position: center;
+      padding: 5rem 2rem;
+    }
+    .hero-content {
+      max-width: 800px;
+      z-index: 2;
+    }
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, #facc15);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.9;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .hero-stat {
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      padding: 0.8rem 1.5rem;
+      border-radius: 60px;
+      border: 1px solid #facc15;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: #ffffff;
+    }
+    .section-title span {
+      background: linear-gradient(135deg, #facc15, #eab308);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    /* Featured Event Card */
+    .featured-event {
+      background: linear-gradient(135deg, #0a0a0a, #111111);
+      border-radius: 2rem;
+      margin-bottom: 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      overflow: hidden;
+      border: 1px solid #facc15;
+    }
+    .featured-img {
+      flex: 1;
+      min-width: 280px;
+      background-size: cover;
+      background-position: center;
+    }
+    .featured-info {
+      flex: 1;
+      padding: 2rem;
+    }
+    .featured-info h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #facc15;
+    }
+    .featured-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 0.8rem 0;
+      color: #cbd5e1;
+    }
+    .countdown {
+      display: flex;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .countdown-box {
+      background: #1a1a1a;
+      padding: 0.8rem;
+      border-radius: 1rem;
+      text-align: center;
+      min-width: 70px;
+    }
+    .countdown-number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #facc15;
+    }
+    .featured-btn {
+      background: #facc15;
+      color: #000;
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .filter-btn {
+      background: #0a0a0a;
+      border: 1px solid #2a2a2a;
+      color: #cbd5e1;
+      padding: 0.6rem 1.4rem;
+      border-radius: 60px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: #facc15;
+      color: #000000;
+      border-color: #facc15;
+    }
+
+    /* Events Grid */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+    .event-card {
+      background: #0a0a0a;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: 0.3s;
+      border: 1px solid #2a2a2a;
+    }
+    .event-card:hover {
+      transform: translateY(-5px);
+      border-color: #facc15;
+      box-shadow: 0 20px 30px rgba(250,204,21,0.1);
+    }
+    .event-img {
+      width: 100%;
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .event-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #facc15;
+      color: #000;
+      padding: 0.3rem 0.8rem;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.7rem;
+    }
+    .event-info {
+      padding: 1.5rem;
+    }
+    .event-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+      color: #fff;
+    }
+    .event-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    .event-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+    .event-detail i {
+      width: 20px;
+      color: #facc15;
+    }
+    .speaker {
+      font-size: 0.8rem;
+      color: #facc15;
+      margin: 0.5rem 0;
+    }
+    .price {
+      font-weight: 700;
+      color: #facc15;
+      margin: 0.5rem 0;
+    }
+    .attendees {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+    .interested-btn {
+      width: 100%;
+      background: transparent;
+      border: 1px solid #facc15;
+      color: #facc15;
+      padding: 0.7rem;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: 0.2s;
+    }
+    .interested-btn:hover {
+      background: #facc15;
+      color: #000;
+    }
+
+    /* Footer */
+    .simple-footer {
+      background: #000000;
+      color: #94a3b8;
+      text-align: center;
+      padding: 2rem;
+      border-top: 4px solid #facc15;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 2rem 1rem; }
+      .featured-event { flex-direction: column; }
+      .countdown-box { min-width: 60px; }
+      .countdown-number { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="events-hero" data-aos="fade-up">
+  <div class="hero-content">
+    <h1>Stackly Events</h1>
+    <p>Where creators connect, learn, and celebrate. Join 50,000+ members at our global gatherings.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><i class="fas fa-calendar-alt"></i> 20+ Events</div>
+      <div class="hero-stat"><i class="fas fa-users"></i> 50K+ Attendees</div>
+      <div class="hero-stat"><i class="fas fa-globe"></i> 15 Countries</div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <!-- Featured Event with Countdown -->
+  <div data-aos="zoom-in">
+    <div class="featured-event">
+      <div class="featured-img" style="background-image: url('esports.webp');"></div>
+      <div class="featured-info">
+        <h2>✨ Stackly Global Summit 2026</h2>
+        <div class="featured-detail"><i class="fas fa-calendar-alt"></i> July 15-17, 2026</div>
+        <div class="featured-detail"><i class="fas fa-location-dot"></i> San Francisco, CA + Virtual</div>
+        <div class="featured-detail"><i class="fas fa-microphone-alt"></i> Speakers: Emma Richards, Marcus Chen, +10 experts</div>
+        <div class="countdown" id="countdown"></div>
+        <a href="404.html" class="featured-btn">Secure Your Seat →</a>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title" data-aos="fade-up">Upcoming <span>Events</span></h2>
+  
+  <!-- Filter Bar -->
+  <div class="filter-bar" data-aos="fade-up">
+    <button class="filter-btn active" data-filter="all">All Events</button>
+    <button class="filter-btn" data-filter="virtual">Virtual</button>
+    <button class="filter-btn" data-filter="in-person">In‑Person</button>
+    <button class="filter-btn" data-filter="workshop">Workshop</button>
+    <button class="filter-btn" data-filter="festival">Festival</button>
+  </div>
+
+  <!-- Events Grid (20+ events) -->
+  <div class="events-grid" id="eventsGrid"></div>
+</div>
+
+
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, once: false, offset: 100, mirror: true });
+
+  // Countdown Timer for Featured Event (July 15, 2026)
+  function updateCountdown() {
+    const targetDate = new Date(2026, 6, 15, 10, 0, 0); // July 15, 2026, 10:00 AM
+    const now = new Date();
+    const diff = targetDate - now;
+    if (diff <= 0) {
+      document.getElementById('countdown').innerHTML = '<div class="countdown-box"><span class="countdown-number">Event Started!</span></div>';
+      return;
+    }
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (86400000)) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+    document.getElementById('countdown').innerHTML = `
+      <div class="countdown-box"><div class="countdown-number">${days}</div><div>Days</div></div>
+      <div class="countdown-box"><div class="countdown-number">${hours}</div><div>Hours</div></div>
+      <div class="countdown-box"><div class="countdown-number">${minutes}</div><div>Mins</div></div>
+      <div class="countdown-box"><div class="countdown-number">${seconds}</div><div>Secs</div></div>
+    `;
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // 24 realistic events data (more than 20)
+  const eventsData = [
+    { id: 1, title: "Creator Summit 2026", date: "May 15, 2026", time: "10:00 AM", location: "Online (Zoom)", type: "virtual", attendees: "2.3k", image: "ev1.webp", badge: "Virtual", speaker: "Emma Richards", price: "Free" },
+    { id: 2, title: "Yellow Aesthetic Workshop", date: "May 20, 2026", time: "2:00 PM", location: "NYC", type: "in-person", attendees: "450", image: "ev2.webp", badge: "In-Person", speaker: "Sofia Lopez", price: "$29" },
+    { id: 3, title: "Reels Masterclass", date: "May 22, 2026", time: "11:00 AM", location: "YouTube Live", type: "virtual", attendees: "1.8k", image: "ev3.webp", badge: "Virtual", speaker: "Alex Rivera", price: "Free" },
+    { id: 4, title: "LA Community Meetup", date: "May 25, 2026", time: "6:00 PM", location: "Los Angeles", type: "in-person", attendees: "320", image: "ev4.webp", badge: "In-Person", speaker: "Marcus Chen", price: "$15" },
+    { id: 5, title: "Content Strategy Workshop", date: "May 28, 2026", time: "9:00 AM", location: "Online", type: "workshop", attendees: "970", image: "ev5.webp", badge: "Workshop", speaker: "Priya K.", price: "$49" },
+    { id: 6, title: "Music & Reels Live", date: "June 2, 2026", time: "7:00 PM", location: "Virtual", type: "virtual", attendees: "3.1k", image: "ev6.webp", badge: "Virtual", speaker: "DJ Yellow", price: "Free" },
+    { id: 7, title: "Photography Walk: Chicago", date: "June 5, 2026", time: "8:00 AM", location: "Chicago", type: "in-person", attendees: "210", image: "ev7.webp", badge: "In-Person", speaker: "Lena M.", price: "$10" },
+    { id: 8, title: "AI Tools for Creators", date: "June 8, 2026", time: "1:00 PM", location: "Webinar", type: "workshop", attendees: "1.2k", image: "ev8.webp", badge: "Workshop", speaker: "Dr. Chen", price: "$39" },
+    { id: 9, title: "Stackly Gala 2026", date: "June 12, 2026", time: "7:00 PM", location: "Miami", type: "in-person", attendees: "1.5k", image: "ev9.webp", badge: "In-Person", speaker: "Emma Richards", price: "$99" },
+    { id: 10, title: "Viral Marketing Secrets", date: "June 15, 2026", time: "10:00 AM", location: "Online", type: "virtual", attendees: "2.7k", image: "ev10.webp", badge: "Virtual", speaker: "Alex Rivera", price: "Free" },
+    { id: 11, title: "Wellness & Social Media", date: "June 18, 2026", time: "11:00 AM", location: "Online", type: "workshop", attendees: "680", image: "ev11.webp", badge: "Workshop", speaker: "Sofia Lopez", price: "$25" },
+    { id: 12, title: "Creator Awards Night", date: "June 22, 2026", time: "8:00 PM", location: "Virtual", type: "virtual", attendees: "4.2k", image: "ev12.webp", badge: "Virtual", speaker: "Global Creators", price: "Free" },
+    { id: 13, title: "London Creator Meetup", date: "June 25, 2026", time: "3:00 PM", location: "London, UK", type: "in-person", attendees: "380", image: "ev13.webp", badge: "In-Person", speaker: "Oliver T.", price: "£12" },
+    { id: 14, title: "Podcasting 101", date: "June 28, 2026", time: "2:00 PM", location: "Online", type: "workshop", attendees: "550", image: "ev14.webp", badge: "Workshop", speaker: "Mike R.", price: "$19" },
+    { id: 15, title: "Tokyo Anime Fest", date: "July 2, 2026", time: "10:00 AM", location: "Tokyo, Japan", type: "festival", attendees: "2.1k", image: "ev15.webp", badge: "Festival", speaker: "Yuki S.", price: "$45" },
+    { id: 16, title: "Blockchain & Social", date: "July 5, 2026", time: "12:00 PM", location: "Virtual", type: "virtual", attendees: "890", image: "ev16.webp", badge: "Virtual", speaker: "Crypto Queen", price: "Free" },
+    { id: 17, title: "Dubai Influencer Summit", date: "July 8, 2026", time: "9:00 AM", location: "Dubai, UAE", type: "in-person", attendees: "1.1k", image: "ev17.webp", badge: "In-Person", speaker: "Fatima A.", price: "$79" },
+    { id: 18, title: "Short-Form Video Bootcamp", date: "July 12, 2026", time: "1:00 PM", location: "Online", type: "workshop", attendees: "1.4k", image: "ev18.webp", badge: "Workshop", speaker: "TikTok Star", price: "$59" },
+    { id: 19, title: "São Paulo Street Art", date: "July 18, 2026", time: "2:00 PM", location: "São Paulo, Brazil", type: "festival", attendees: "750", image: "ev19.webp", badge: "Festival", speaker: "Carlos M.", price: "$20" },
+    { id: 20, title: "Women in Tech Panel", date: "July 22, 2026", time: "11:00 AM", location: "Virtual", type: "virtual", attendees: "2.0k", image: "ev20.webp", badge: "Virtual", speaker: "Emma Richards", price: "Free" },
+    { id: 21, title: "Berlin Music Festival", date: "July 25, 2026", time: "6:00 PM", location: "Berlin, Germany", type: "festival", attendees: "3.2k", image: "e21.webp", badge: "Festival", speaker: "DJ Blaze", price: "€35" },
+    { id: 22, title: "Startup Pitch Night", date: "July 28, 2026", time: "5:00 PM", location: "San Francisco", type: "in-person", attendees: "420", image: "e22.webp", badge: "In-Person", speaker: "VC Panel", price: "$25" },
+    { id: 23, title: "Mental Health for Creators", date: "Aug 1, 2026", time: "10:00 AM", location: "Online", type: "workshop", attendees: "980", image: "e23.webp", badge: "Workshop", speaker: "Dr. Lee", price: "$15" },
+    { id: 24, title: "Global Creator Week", date: "Aug 5, 2026", time: "All Day", location: "Multiple Cities", type: "festival", attendees: "10k+", image: "e24.webp", badge: "Festival", speaker: "Global", price: "Various" }
+  ];
+
+  function renderEvents(filter = "all") {
+    const grid = document.getElementById('eventsGrid');
+    grid.innerHTML = '';
+    const filtered = filter === "all" ? eventsData : eventsData.filter(e => e.type === filter);
+    filtered.forEach((event, idx) => {
+      const card = document.createElement('div');
+      card.className = 'event-card';
+      // Different AOS animations for variety
+      const animations = ['fade-up', 'zoom-in', 'flip-left', 'slide-right'];
+      card.setAttribute('data-aos', animations[idx % animations.length]);
+      card.setAttribute('data-aos-delay', (idx % 4) * 100);
+      card.innerHTML = `
+        <div class="event-img" style="background-image: url('${event.image}');">
+          <div class="event-badge">${event.badge}</div>
+        </div>
+        <div class="event-info">
+          <h3>${event.title}</h3>
+          <div class="speaker"><i class="fas fa-user"></i> ${event.speaker}</div>
+          <div class="event-details">
+            <div class="event-detail"><i class="fas fa-calendar-alt"></i> ${event.date}</div>
+            <div class="event-detail"><i class="fas fa-clock"></i> ${event.time}</div>
+            <div class="event-detail"><i class="fas fa-location-dot"></i> ${event.location}</div>
+          </div>
+          <div class="price"><i class="fas fa-tag"></i> ${event.price}</div>
+          <div class="attendees"><i class="fas fa-users"></i> ${event.attendees} interested</div>
+          <button class="interested-btn" data-id="${event.id}">I'm Interested</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+    document.querySelectorAll('.interested-btn').forEach(btn => {
+      btn.addEventListener('click', () => window.location.href = '404.html');
+    });
+  }
+
+  renderEvents('all');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderEvents(btn.getAttribute('data-filter'));
+      AOS.refresh();
+    });
+  });
+</script>
+</body>
+</html>
+</body>
+</html>
+  
+<!-- Stackly Footer - Enhanced with more content (unique classes) -->
+<footer class="stackly-footer-wrapper">
+  <div class="stackly-footer-container">
+    <div class="stackly-footer-grid">
+      
+      <!-- Column 1: Brand + Logo + Social proof -->
+      <div class="stackly-footer-brand">
+        <div class="stackly-footer-logo">
+          <img src="stacklylogo (1).webp" alt="Stackly Logo" class="stackly-footer-logo-img" width="148" height="48">
+          <span class="stackly-footer-logo-text"></span>
+        </div>
+        <p class="stackly-footer-description">Where communities rise. Connect, create, and share your story across all major platforms. Yellow vibe — bold identity.</p>
+        <div class="stackly-footer-stats">
+          <span><i class="fas fa-users"></i> 250K+ Users</span>
+          <span><i class="fas fa-globe"></i> 15+ Countries</span>
+        </div>
+        <div class="stackly-footer-tagline">
+          <i class="fas fa-bolt"></i>
+          <span>#StacklySocial | #DigitalWave</span>
+        </div>
+        <!-- App badges -->
+        <div class="stackly-footer-app-badges">
+          <a href="404.html"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" style="height: 40px;"></a>
+          <a href="404.html"><img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on App Store" style="height: 40px;"></a>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="stackly-footer-links">
+        <h4 class="stackly-footer-heading">Explore</h4>
+        <ul class="stackly-footer-nav">
+          <li><a href="index.html"><i class="fas fa-hashtag"></i> Home</a></li>
+          <li><a href="events.html"><i class="fas fa-users"></i> Events</a></li>
+          <li><a href="posts.html"><i class="fas fa-chart-line"></i> Posts</a></li>
+          <li><a href="about.html"><i class="fas fa-shield-alt"></i> About</a></li>
+          <li><a href="contact.html"><i class="fas fa-headset"></i> Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Resources (new) -->
+      <div class="stackly-footer-resources">
+        <h4 class="stackly-footer-heading">Resources</h4>
+        <ul class="stackly-footer-nav">
+          <li><a href="404.html"><i class="fas fa-blog"></i> Blog</a></li>
+          <li><a href="404.html"><i class="fas fa-chalkboard-user"></i> Creator Hub</a></li>
+          <li><a href="404.html"><i class="fas fa-circle-info"></i> Help Center</a></li>
+          <li><a href="404.html"><i class="fas fa-bullhorn"></i> Press Kit</a></li>
+          <li><a href="404.html"><i class="fas fa-code"></i> Developers</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Newsletter + Social Icons -->
+      <div class="stackly-footer-newsletter">
+        <h4 class="stackly-footer-heading">Subscribe & Go viral</h4>
+        <div class="stackly-footer-form">
+          <div class="stackly-footer-input-group">
+            <input type="email" id="stacklyFooterEmail" class="stackly-footer-email-input" placeholder="Your email address *" required>
+            <button id="stacklyFooterSubscribeBtn" class="stackly-footer-subscribe-btn"><i class="fas fa-paper-plane"></i> Subscribe now</button>
+            <span id="stacklyFooterErrorMsg" class="stackly-footer-error-msg"></span>
+          </div>
+          <div class="stackly-footer-follow-text">
+            <i class="fas fa-gift"></i> Get exclusive updates & early access
+          </div>
+        </div>
+        <div class="stackly-footer-social-icons">
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-linkedin-in"></i></a>
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-youtube"></i></a>
+         
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar with back-to-top and more legal links -->
+    <div class="stackly-footer-bottom">
+      <div class="stackly-footer-copyright">
+        <i class="far fa-copyright"></i> 2026 Stackly — All social rights reserved. <i class="fas fa-heart" style="color:#facc15;"></i>
+      </div>
+      <div class="stackly-footer-legal">
+        <a href="404.html">Privacy</a>
+        <a href="404.html">Terms</a>
+        <a href="404.html">Cookies</a>
+        <a href="404.html">Accessibility</a>
+        <a href="404.html"><i class="fab fa-discord"></i> Discord</a>
+        <a href="index.html" id="stacklyBackToTop"><i class="fas fa-arrow-up"></i> Top</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* ---------- STACKLY FOOTER UNIQUE STYLES (no overlap) ---------- */
+  .stackly-footer-wrapper {
+    background: #000000;
+    color: #ffffff;
+    border-top: 4px solid #facc15;
+    margin-top: 2rem;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  .stackly-footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 1.5rem;
+  }
+  .stackly-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .stackly-footer-brand, .stackly-footer-links, .stackly-footer-resources, .stackly-footer-newsletter {
+    text-align: left;
+  }
+  .stackly-footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+  .stackly-footer-logo-img {
+    width: 148px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+  .stackly-footer-logo-text {
+    font-size: 1.7rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #facc15 0%, #ffde6e 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .stackly-footer-description {
+    line-height: 1.5;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+  }
+  .stackly-footer-stats {
+    display: flex;
+    gap: 1rem;
+    margin: 0.8rem 0;
+    font-size: 0.8rem;
+    color: #facc15;
+  }
+  .stackly-footer-stats i {
+    margin-right: 4px;
+  }
+  .stackly-footer-tagline {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.75rem;
+    background: rgba(250, 204, 21, 0.12);
+    padding: 0.3rem 0.9rem;
+    border-radius: 40px;
+    width: fit-content;
+    color: #facc15;
+    margin-bottom: 1rem;
+  }
+  .stackly-footer-app-badges {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-top: 0.8rem;
+  }
+  .stackly-footer-app-badges img {
+    height: 38px;
+    width: auto;
+    border-radius: 8px;
+    transition: transform 0.2s;
+  }
+  .stackly-footer-app-badges img:hover {
+    transform: scale(1.02);
+  }
+  .stackly-footer-heading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    position: relative;
+    display: inline-block;
+    color: #ffffff;
+  }
+  .stackly-footer-heading:after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 36px;
+    height: 3px;
+    background: #facc15;
+    border-radius: 2px;
+  }
+  .stackly-footer-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .stackly-footer-nav a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+  }
+  .stackly-footer-nav a i {
+    font-size: 0.7rem;
+    color: #facc15;
+  }
+  .stackly-footer-nav a:hover {
+    color: #facc15;
+    transform: translateX(4px);
+  }
+  .stackly-footer-social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+  .stackly-footer-social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 1.1rem;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    border: 1px solid #333;
+  }
+  .stackly-footer-social-icon:hover {
+    transform: translateY(-4px);
+    background: #facc15;
+    color: #000000;
+    border-color: #facc15;
+  }
+  .stackly-footer-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .stackly-footer-email-input {
+    background: #1c1c1c;
+    border: 1px solid #333;
+    padding: 0.7rem 1rem;
+    border-radius: 60px;
+    font-size: 0.85rem;
+    color: white;
+    outline: none;
+    width: 100%;
+    transition: all 0.2s;
+  }
+  .stackly-footer-email-input:focus {
+    border-color: #facc15;
+    box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.3);
+  }
+  .stackly-footer-subscribe-btn {
+    background: #facc15;
+    color: #000000;
+    border: none;
+    padding: 0.7rem;
+    border-radius: 60px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    transition: all 0.2s;
+  }
+  .stackly-footer-subscribe-btn:hover {
+    background: #ffde34;
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
+  }
+  .stackly-footer-error-msg {
+    font-size: 0.7rem;
+    color: #facc15;
+    margin-top: 4px;
+    display: block;
+    text-align: left;
+  }
+  .stackly-footer-follow-text {
+    font-size: 0.7rem;
+    margin-top: 0.8rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stackly-footer-bottom {
+    border-top: 1px solid rgba(250, 204, 21, 0.2);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.75rem;
+  }
+  .stackly-footer-copyright {
+    color: #94a3b8;
+  }
+  .stackly-footer-copyright i {
+    color: #facc15;
+  }
+  .stackly-footer-legal {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .stackly-footer-legal a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .stackly-footer-legal a:hover {
+    color: #facc15;
+  }
+  @media (max-width: 880px) {
+    .stackly-footer-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+  }
+  @media (max-width: 780px) {
+    .stackly-footer-container { padding: 1.8rem 1.2rem; }
+    .stackly-footer-grid { gap: 1.5rem; }
+    .stackly-footer-logo-text { font-size: 1.3rem; }
+  }
+  @media (max-width: 550px) {
+    .stackly-footer-bottom { flex-direction: column; text-align: center; }
+    .stackly-footer-legal { justify-content: center; }
+    .stackly-footer-stats { flex-direction: column; gap: 0.3rem; }
+  }
+</style>
+
+<script>
+  // Unique script for Stackly footer (no global conflicts)
+  (function() {
+    const subscribeBtn = document.getElementById('stacklyFooterSubscribeBtn');
+    const emailInput = document.getElementById('stacklyFooterEmail');
+    const errorSpan = document.getElementById('stacklyFooterErrorMsg');
+    const backToTop = document.getElementById('stacklyBackToTop');
+
+    function isValidEmail(email) {
+      if (!email || email.trim() === '') return false;
+      const emailRegex = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/;
+      return emailRegex.test(email.trim());
+    }
+
+    function handleSubscribe(event) {
+      event.preventDefault();
+      const emailValue = emailInput.value.trim();
+      errorSpan.innerText = '';
+
+      if (!emailValue) {
+        errorSpan.innerText = '❌ Email address is mandatory.';
+        emailInput.focus();
+        return;
+      }
+
+      if (!isValidEmail(emailValue)) {
+        errorSpan.innerText = '⚠️ Please enter a valid email (e.g., name@example.com)';
+        emailInput.focus();
+        return;
+      }
+
+      // Redirect to custom 404 page
+      window.location.href = '404.html';
+    }
+
+    if (subscribeBtn) {
+      subscribeBtn.addEventListener('click', handleSubscribe);
+      emailInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleSubscribe(e);
+        }
+      });
+    }
+
+    // Back to top functionality
+    if (backToTop) {
+      backToTop.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  })();
+</script>

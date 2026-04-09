@@ -1,0 +1,2805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <title>Stackly | Modern Responsive Navbar + Services</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f7fb;
+      overflow-x: hidden;
+    }
+
+    /* ----- STICKY NAVBAR (CLEAN, FIXED Z-INDEX) ----- */
+    .stackly-navbar {
+      background: #fff;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0 24px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1480px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ----- LOGO STYLES ----- */
+    .stackly-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      line-height: 0;
+    }
+
+    .logo-img {
+      width: 200px;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      transition: 0.2s;
+    }
+
+    /* ----- DESKTOP CIRCLE MENU (sleek & interactive) ----- */
+    .circle-nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .circle-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      cursor: pointer;
+      min-width: 68px;
+    }
+
+    .circle-icon {
+      width: 56px;
+      height: 56px;
+      background: #f0f2f5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      margin-bottom: 6px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+    }
+
+    .circle-icon i {
+      font-size: 24px;
+      color: #1c1e21;
+      transition: 0.2s;
+    }
+
+    .circle-item span {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #1c1e21;
+      letter-spacing: -0.2px;
+    }
+
+    .circle-item:hover .circle-icon {
+      background: #ffe6df;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px rgba(217, 104, 70, 0.15);
+    }
+
+    .circle-item:hover i {
+      color: #ffbf00;
+    }
+
+    .circle-item:hover span {
+      color: #ffbf00;
+    }
+
+    .circle-item.get-started .circle-icon {
+      background: #ffbf00;
+    }
+    .circle-item.get-started .circle-icon i {
+      color: white;
+    }
+    .circle-item.get-started span {
+      font-weight: 700;
+      color: #ffbf00;
+    }
+
+    .circle-item.login .circle-icon {
+      background: #fef2ef;
+    }
+
+    /* ----- HAMBURGER BUTTON (mobile only) ----- */
+    .hamburger-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #1c1e21;
+      padding: 8px;
+      transition: 0.2s;
+      z-index: 1002;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hamburger-btn:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    /* ----- FULLSCREEN MOBILE MENU (PREMIUM OVERLAY) ----- */
+    .mobile-fullscreen-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, black 0%, #968041);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      visibility: hidden;
+      overflow-y: auto;
+      backdrop-filter: blur(2px);
+    }
+
+    .mobile-fullscreen-menu.open {
+      transform: translateX(0);
+      visibility: visible;
+    }
+
+    .close-menu-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 52px;
+      height: 52px;
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 2001;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .close-menu-btn i {
+      font-size: 28px;
+      color: white;
+      transition: 0.2s;
+    }
+
+    .close-menu-btn:hover {
+      background: rgba(0, 0, 0, 0.4);
+      transform: scale(1.05);
+    }
+
+    .mobile-nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      text-align: center;
+      width: 100%;
+      max-width: 300px;
+      padding: 20px;
+    }
+
+    .mobile-nav-list a {
+      text-decoration: none;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 14px 20px;
+      border-radius: 80px;
+      transition: 0.25s ease;
+      background: rgba(255, 255, 245, 0.12);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .mobile-nav-list a i {
+      font-size: 1.6rem;
+      width: 36px;
+      color: white;
+    }
+
+    .mobile-nav-list a:hover {
+      background: rgba(0, 0, 0, 0.2);
+      transform: scale(1.02);
+      color: #fff9e0;
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .mobile-menu-footer {
+      margin-top: 56px;
+      font-size: 0.8rem;
+      opacity: 0.85;
+      color: rgba(255, 255, 245, 0.9);
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 28px 80px 28px;
+    }
+
+    .hero-section {
+      background: white;
+      border-radius: 32px;
+      padding: 48px 40px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .hero-section h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1c1e21, #ffbf00);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 18px;
+    }
+
+    .hero-section p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #2d3e50;
+      margin-bottom: 24px;
+    }
+
+    .feature-grid {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .feature-card {
+      background: #f9fafc;
+      border-radius: 24px;
+      padding: 20px;
+      flex: 1;
+      min-width: 180px;
+      text-align: center;
+      transition: 0.2s;
+    }
+
+    .feature-card i {
+      font-size: 32px;
+      color: #ffbf00;
+      margin-bottom: 12px;
+    }
+
+    /* ----- RESPONSIVE (MOBILE + TABLET) ----- */
+    @media (max-width: 860px) {
+      .stackly-navbar {
+        height: 68px;
+        padding: 0 18px;
+      }
+      .circle-nav-menu {
+        display: none;
+      }
+      .hamburger-btn {
+        display: flex;
+      }
+      .logo-img {
+        width: 130px;
+      }
+      .main-content {
+        padding: 24px 20px 60px 20px;
+      }
+      .hero-section {
+        padding: 32px 24px;
+      }
+      .hero-section h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stackly-navbar {
+        height: 60px;
+        padding: 0 14px;
+      }
+      .logo-img {
+        width: 180px;
+      }
+      .mobile-nav-list a {
+        font-size: 1.4rem;
+        gap: 14px;
+        padding: 12px 18px;
+      }
+      .mobile-nav-list a i {
+        font-size: 1.3rem;
+      }
+      .close-menu-btn {
+        width: 48px;
+        height: 48px;
+        top: 18px;
+        right: 18px;
+      }
+      .close-menu-btn i {
+        font-size: 24px;
+      }
+      .hero-section h1 {
+        font-size: 1.6rem;
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY NAVBAR -->
+  <nav class="stackly-navbar">
+    <div class="nav-inner">
+      <!-- Logo with home link -->
+      <a href="index.html" class="stackly-logo" aria-label="Stackly homepage">
+        <img class="logo-img" src="stacklylogo (3).webp" alt="Stackly Logo" onerror="this.src='https://placehold.co/200x60?text=Stackly'">
+      </a>
+
+      <!-- Desktop circle navigation (visible only on desktop) -->
+      <div class="circle-nav-menu">
+        <a href="index.html" class="circle-item"><div class="circle-icon"><i class="fas fa-home"></i></div><span>Home</span></a>
+        <a href="events.html" class="circle-item"><div class="circle-icon"><i class="fas fa-calendar-alt"></i></div><span>Events</span></a>
+        <a href="posts.html" class="circle-item"><div class="circle-icon"><i class="fas fa-file-alt"></i></div><span>Posts</span></a>
+        <a href="about.html" class="circle-item"><div class="circle-icon"><i class="fas fa-info-circle"></i></div><span>About</span></a>
+        <a href="contact.html" class="circle-item"><div class="circle-icon"><i class="fas fa-envelope"></i></div><span>Contact</span></a>
+        <a href="login.html" class="circle-item login"><div class="circle-icon"><i class="fas fa-sign-in-alt"></i></div><span>Login</span></a>
+        <a href="getstarted.html" class="circle-item get-started"><div class="circle-icon"><i class="fas fa-user-plus"></i></div><span>Get Started</span></a>
+      </div>
+
+      <!-- Hamburger button (mobile only) -->
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- FULLSCREEN MOBILE MENU (covers navbar completely) -->
+  <div class="mobile-fullscreen-menu" id="mobileMenu">
+    <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="mobile-nav-list">
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="events.html"><i class="fas fa-calendar-alt"></i> Events</a>
+      <a href="posts.html"><i class="fas fa-file-alt"></i> Posts</a>
+      <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+      <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+      <a href="getstarted.html"><i class="fas fa-user-plus"></i> Get Started</a>
+    </div>
+    <div class="mobile-menu-footer">© Stackly - 2026</div>
+  </div>
+
+  
+
+  <script>
+    (function() {
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const closeMenuBtn = document.getElementById('closeMenuBtn');
+      const body = document.body;
+      const allMobileLinks = document.querySelectorAll('.mobile-nav-list a');
+      // No demo alerts — all links work normally (they have hrefs)
+
+      function openMobileMenu() {
+        if (!mobileMenu) return;
+        mobileMenu.classList.add('open');
+        body.classList.add('menu-open');
+        if (hamburgerBtn) hamburgerBtn.style.display = 'none';
+      }
+
+      function closeMobileMenu() {
+        if (!mobileMenu) return;
+        mobileMenu.classList.remove('open');
+        body.classList.remove('menu-open');
+        if (hamburgerBtn) hamburgerBtn.style.display = '';
+      }
+
+      if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (mobileMenu.classList.contains('open')) closeMobileMenu();
+          else openMobileMenu();
+        });
+      }
+
+      if (closeMenuBtn) {
+        closeMenuBtn.addEventListener('click', closeMobileMenu);
+      }
+
+      // Close menu after clicking a mobile link (but allow navigation)
+      allMobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          closeMobileMenu();
+        });
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('open')) {
+          closeMobileMenu();
+        }
+      });
+
+      function handleResize() {
+        if (window.innerWidth > 860) {
+          if (mobileMenu && mobileMenu.classList.contains('open')) closeMobileMenu();
+          if (hamburgerBtn) hamburgerBtn.style.display = '';
+        } else {
+          if (mobileMenu && !mobileMenu.classList.contains('open') && hamburgerBtn) {
+            hamburgerBtn.style.display = '';
+          } else if (mobileMenu && mobileMenu.classList.contains('open') && hamburgerBtn) {
+            hamburgerBtn.style.display = 'none';
+          }
+        }
+      }
+      window.addEventListener('resize', handleResize);
+      handleResize();
+    })();
+  </script>
+</body>
+</html>
+  
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+    .sm-container { max-width: 800px; margin: 0 auto; padding: 1rem 1.5rem; }
+
+    /* ========== HERO VIDEO SECTION (same as before) ========== */
+    .hero-video-section {
+      position: relative;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .hero-bg-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      filter: brightness(0.6);
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 80% 20%, rgba(0,0,0,0.4), rgba(0,0,0,0.85));
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 2rem;
+    }
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, #facc15);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .hero-buttons { margin-top: 1.5rem; }
+    .hero-btn {
+      background: #facc15;
+      color: #000;
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      margin: 0 0.5rem;
+    }
+    .hero-btn-outline {
+      background: transparent;
+      border: 2px solid #facc15;
+      color: #facc15;
+    }
+
+    /* Search */
+    .sm-search-section {
+      background: #0a0a0a;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid #2a2a2a;
+    }
+    .sm-search-box { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .sm-search-input {
+      flex: 1;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      padding: 0.8rem 1.2rem;
+      border-radius: 60px;
+      color: white;
+      outline: none;
+    }
+    .sm-search-input:focus { border-color: #facc15; }
+    .sm-go-btn {
+      background: #facc15;
+      color: #000;
+      border: none;
+      padding: 0 1.8rem;
+      border-radius: 60px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .sm-search-results {
+      background: #0f0f0f;
+      border-radius: 1rem;
+      margin-top: 1rem;
+      display: none;
+      flex-direction: column;
+    }
+    .sm-search-results.active { display: flex; }
+    .sm-result-item { padding: 0.7rem 1rem; cursor: pointer; transition: 0.2s; }
+    .sm-result-item:hover { background: #facc15; color: #000; }
+
+    /* Stories */
+    .sm-stories {
+      background: #0a0a0a;
+      border-radius: 1.5rem;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border: 1px solid #2a2a2a;
+    }
+    .sm-stories-title { font-weight: 600; margin-bottom: 1rem; color: #facc15; }
+    .sm-stories-scroll { display: flex; gap: 1.2rem; overflow-x: auto; padding-bottom: 0.5rem; }
+    .sm-story-card { text-align: center; cursor: pointer; min-width: 80px; transition: 0.2s; }
+    .sm-story-card:hover { transform: translateY(-3px); }
+    .sm-story-ring {
+      width: 80px; height: 80px;
+      background: linear-gradient(135deg, #facc15, #ca8a04);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sm-story-avatar { width: 72px; height: 72px; border-radius: 50%; background-size: cover; border: 2px solid black; }
+    .sm-story-name { font-size: 0.7rem; margin-top: 5px; }
+
+    /* Reels (full‑width horizontal carousel) */
+    .sm-reels-section {
+      margin-bottom: 2rem;
+    }
+    .sm-reels-section h2 {
+      font-size: 1.5rem; margin-bottom: 1rem; color: #facc15;
+    }
+    .sm-reels-scroll {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.5rem;
+    }
+    .sm-reel-card {
+      flex: 0 0 260px;
+      scroll-snap-align: start;
+      background: #0a0a0a;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid #2a2a2a;
+      position: relative;
+    }
+    .sm-reel-video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; }
+    .sm-reel-play-pause {
+      position: absolute; bottom: 50px; left: 10px; background: rgba(0,0,0,0.6);
+      border-radius: 30px; padding: 5px 10px; cursor: pointer; z-index: 2; font-size: 0.7rem;
+      display: flex; align-items: center; gap: 4px; color: #facc15;
+    }
+    .sm-reel-actions { display: flex; justify-content: space-around; padding: 0.5rem; background: #111; }
+    .sm-reel-like-btn, .sm-reel-share-btn {
+      background: transparent; border: none; color: #cbd5e1; cursor: pointer; display: flex; align-items: center; gap: 4px;
+    }
+
+    /* Posts (full width) */
+    .sm-posts-section h2 {
+      font-size: 1.5rem; margin-bottom: 1rem; color: #facc15;
+    }
+    .sm-post-card {
+      background: #0a0a0a;
+      border-radius: 1.2rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #2a2a2a;
+      overflow: hidden;
+    }
+    .sm-post-header { display: flex; align-items: center; gap: 0.8rem; padding: 1rem; }
+    .sm-post-avatar {
+      width: 44px; height: 44px; background: #facc15; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000;
+    }
+    .sm-post-user h4 { font-size: 0.9rem; }
+    .sm-post-time { font-size: 0.7rem; color: #94a3b8; }
+    .sm-post-caption { padding: 0 1rem 0.6rem; }
+    .sm-post-image { width: 100%; height: 260px; background-size: cover; background-position: center; }
+    .sm-post-stats {
+      display: flex; justify-content: space-between; padding: 0.6rem 1rem; font-size: 0.75rem;
+      color: #94a3b8; border-top: 1px solid #2a2a2a; border-bottom: 1px solid #2a2a2a;
+    }
+    .sm-post-actions { display: flex; justify-content: space-around; padding: 0.4rem; flex-wrap: wrap; gap: 0.2rem; }
+    .sm-action-btn {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+      padding: 0.5rem; background: transparent; border: none; color: #cbd5e1;
+      cursor: pointer; transition: 0.2s; font-size: 0.75rem;
+    }
+    .sm-action-btn:hover { background: #1a1a1a; color: #facc15; }
+    .sm-comment-section {
+      padding: 0.8rem 1rem; border-top: 1px solid #2a2a2a; display: none; background: #050505;
+    }
+    .sm-comment-section.active { display: block; }
+    .sm-single-comment { font-size: 0.8rem; margin-bottom: 0.5rem; color: #cbd5e1; }
+
+    /* Friend Requests + Marketplace */
+    .sm-friends-shop { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
+    @media (max-width: 700px) { .sm-friends-shop { grid-template-columns: 1fr; } }
+    .sm-friends-card, .sm-shop-card, .sm-reviews-card, .sm-gallery-card {
+      background: #0a0a0a; border-radius: 1.5rem; padding: 1.2rem; border: 1px solid #2a2a2a;
+    }
+    .sm-friend-item {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
+      justify-content: space-between; flex-wrap: wrap;
+    }
+    .sm-friend-info { display: flex; align-items: center; gap: 0.8rem; }
+    .sm-friend-avatar-img { width: 48px; height: 48px; border-radius: 50%; background-size: cover; background-position: center; }
+    .sm-friend-buttons button {
+      background: #facc15; border: none; margin: 0 0.2rem; padding: 0.3rem 0.7rem;
+      border-radius: 30px; cursor: pointer; font-weight: 600;
+    }
+    .sm-shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+    .sm-product { background: #111; border-radius: 1rem; padding: 0.8rem; text-align: center; }
+    .sm-product-img { width: 100%; height: 100px; background-size: cover; border-radius: 0.8rem; margin-bottom: 0.5rem; }
+    .sm-buy-btn {
+      background: #facc15; border: none; width: 100%; padding: 0.4rem;
+      border-radius: 40px; font-weight: 600; cursor: pointer; margin-top: 0.5rem;
+    }
+
+    /* Customer Reviews */
+    .sm-reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+    .sm-review-card { background: #111; padding: 1.2rem; border-radius: 1rem; display: flex; gap: 1rem; align-items: center; }
+    .sm-review-avatar { width: 60px; height: 60px; border-radius: 50%; background-size: cover; background-position: center; }
+    .sm-review-content { flex: 1; }
+    .sm-review-stars { color: #facc15; margin: 0.3rem 0; font-size: 0.8rem; }
+    .sm-review-text { color: #cbd5e1; font-size: 0.85rem; line-height: 1.4; }
+
+    /* Gallery */
+    .sm-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+      grid-auto-flow: dense;
+    }
+    .sm-gallery-item {
+      background: #111;
+      border-radius: 1rem;
+      background-size: cover;
+      background-position: center;
+      transition: 0.3s;
+    }
+    .sm-gallery-item:hover { transform: scale(1.02); border: 1px solid #facc15; }
+    .sm-portrait { aspect-ratio: 3 / 4; grid-row: span 2; }
+    .sm-square { aspect-ratio: 1 / 1; }
+    .sm-landscape { aspect-ratio: 4 / 3; }
+
+    /* Video Modal */
+    .sm-video-modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center;
+    }
+    .sm-video-modal.active { display: flex; }
+    .sm-modal-content { width: 90%; max-width: 700px; position: relative; }
+    .sm-modal-video { width: 100%; border-radius: 1rem; }
+    .sm-modal-close {
+      position: absolute; top: -40px; right: 0; background: #facc15; border: none;
+      width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+    }
+    .sm-play-pause-btn {
+      margin-top: 0.5rem; background: #facc15; border: none; padding: 0.4rem 1rem;
+      border-radius: 40px; cursor: pointer; font-weight: bold;
+    }
+
+    @media (max-width: 550px) {
+      .sm-container { padding: 1rem; }
+      .sm-reel-card { flex: 0 0 200px; }
+    }
+  </style>
+</head>
+<body>
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #000;
+      overflow-x: hidden;
+    }
+
+    /* Hero Section with Video Background */
+    .hero-video-section {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Background Video */
+    .hero-bg-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      filter: brightness(0.55) contrast(1.1);
+    }
+
+    /* Dark Overlay for readability */
+   .hero-overlay{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:1;
+
+  /* Very dark overlay for maximum text visibility */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0,0,0,0.92) 0%,
+      rgba(0,0,0,0.82) 35%,
+      rgba(0,0,0,0.75) 60%,
+      rgba(0,0,0,0.92) 100%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 196, 0, 0.08) 0%,
+      rgba(0,0,0,0.88) 45%,
+      rgba(0,0,0,0.98) 100%
+    );
+  backdrop-filter: blur(2px);
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:700px;
+  color:#fff;
+  text-shadow:
+    0 2px 8px rgba(0,0,0,0.9),
+    0 4px 20px rgba(0,0,0,1);
+}
+
+.hero-content h1{
+  color:#fff;
+  font-size:clamp(2.5rem,6vw,5rem);
+  line-height:1.1;
+  font-weight:800;
+}
+
+.hero-content p{
+  color:rgba(255,255,255,0.92);
+  font-size:clamp(1rem,2vw,1.2rem);
+  line-height:1.8;
+  max-width:600px;
+}
+
+    /* Content */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      padding: 2rem;
+      color: white;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      padding: 0.5rem 1.2rem;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #facc15;
+      border: 1px solid rgba(250,204,21,0.5);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #ffffff, #facc15);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-content .highlight {
+      background: linear-gradient(120deg, #facc15, #ffde6e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    /* CTA Buttons */
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn-primary {
+      background: #facc15;
+      color: #000000;
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(250,204,21,0.3);
+    }
+    .btn-primary:hover {
+      background: #ffde34;
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(250,204,21,0.4);
+    }
+
+    .btn-outline {
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(250,204,21,0.7);
+      color: #facc15;
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.3s;
+    }
+    .btn-outline:hover {
+      background: rgba(250,204,21,0.2);
+      border-color: #facc15;
+      transform: translateY(-2px);
+    }
+
+    /* Social Proof Counters */
+    .social-proof {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .proof-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .proof-number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #facc15;
+    }
+    .proof-label {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+    }
+
+    /* Floating Social Icons (decorative) */
+    .floating-icon {
+      position: absolute;
+      font-size: 1.5rem;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(6px);
+      padding: 12px;
+      border-radius: 50%;
+      color: #facc15;
+      z-index: 3;
+      animation: floatIcon 6s infinite alternate;
+    }
+    @keyframes floatIcon {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(-15px) rotate(5deg); }
+    }
+    .icon-1 { top: 10%; left: 5%; animation-delay: 0s; }
+    .icon-2 { bottom: 15%; right: 5%; animation-delay: 1s; }
+    .icon-3 { top: 40%; right: 8%; animation-delay: 0.5s; }
+    .icon-4 { bottom: 30%; left: 3%; animation-delay: 1.5s; }
+
+    @media (max-width: 900px) {
+      .floating-icon { display: none; }
+    }
+    @media (max-width: 550px) {
+      .hero-buttons { flex-direction: column; align-items: stretch; width: 100%; }
+      .btn-primary, .btn-outline { justify-content: center; }
+      .social-proof { gap: 1rem; }
+      .proof-number { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero-video-section">
+    <!-- Video Background (replace with your own video URL) -->
+    <video class="hero-bg-video" autoplay muted loop playsinline>
+      <source src="14205-255658030_medium.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-overlay"></div>
+
+    <!-- Decorative floating icons -->
+    <div class="floating-icon icon-1"><i class="fab fa-instagram"></i></div>
+    <div class="floating-icon icon-2"><i class="fab fa-tiktok"></i></div>
+    <div class="floating-icon icon-3"><i class="fab fa-twitter"></i></div>
+    <div class="floating-icon icon-4"><i class="fab fa-youtube"></i></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fas fa-hashtag"></i> <span>#1 Social Experience</span>
+      </div>
+      <h1>
+        Connect, Create, <br>
+        <span class="highlight">Go Viral</span> with Stackly
+      </h1>
+      <p class="hero-description">
+        The next‑gen social platform where your voice echoes louder. 
+        Share stories, watch reels, and build a community that celebrates you.
+      </p>
+      <div class="hero-buttons">
+        <a href="404.html" class="btn-primary"><i class="fas fa-rocket"></i> Start Creating</a>
+        <a href="404.html" class="btn-outline"><i class="fas fa-play-circle"></i> Watch Demo</a>
+      </div>
+      <div class="social-proof">
+        <div class="proof-item"><span class="proof-number">10M+</span><span class="proof-label">Active Users</span></div>
+        <div class="proof-item"><span class="proof-number">500M+</span><span class="proof-label">Daily Interactions</span></div>
+        <div class="proof-item"><span class="proof-number">4.9★</span><span class="proof-label">App Store Rating</span></div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
+<div class="sm-container">
+  <!-- Search -->
+  <div class="sm-search-section" data-aos="fade-up">
+    <div class="sm-search-box">
+      <input type="text" id="smSearchInput" class="sm-search-input" placeholder="Search for creators...">
+      <button id="smGoBtn" class="sm-go-btn">Go</button>
+    </div>
+    <div id="smSearchResults" class="sm-search-results"></div>
+  </div>
+
+  <!-- Stories -->
+  <div class="sm-stories" data-aos="fade-up">
+    <div class="sm-stories-title"><i class="fas fa-circle-play"></i> Stories</div>
+    <div class="sm-stories-scroll" id="smStoriesContainer"></div>
+  </div>
+
+  <!-- Reels (full‑width horizontal carousel) -->
+  <div class="sm-reels-section" data-aos="fade-up">
+    <h2><i class="fas fa-video"></i> Trending Reels</h2>
+    <div class="sm-reels-scroll" id="smReelsContainer"></div>
+  </div>
+
+  <!-- Posts (full width) -->
+  <div class="sm-posts-section" data-aos="fade-up">
+    <h2><i class="fas fa-newspaper"></i> Latest Posts</h2>
+    <div id="smPostsContainer"></div>
+  </div>
+
+  <!-- Friend Requests + Marketplace -->
+  <div class="sm-friends-shop" data-aos="fade-up">
+    <div class="sm-friends-card">
+      <h2><i class="fas fa-user-plus"></i> Friend Requests</h2>
+      <div id="smFriendsContainer"></div>
+    </div>
+    <div class="sm-shop-card">
+      <h2><i class="fas fa-store"></i> Marketplace (INR)</h2>
+      <div class="sm-shop-grid" id="smShopContainer"></div>
+    </div>
+  </div>
+
+  <!-- Customer Reviews -->
+  <div class="sm-reviews-card" data-aos="fade-up">
+    <h2><i class="fas fa-star"></i> Customer Reviews</h2>
+    <div class="sm-reviews-grid" id="smReviewsContainer"></div>
+  </div>
+
+  <!-- Gallery -->
+  <div class="sm-gallery-card" data-aos="fade-up">
+    <h2><i class="fas fa-images"></i> Design Gallery</h2>
+    <div class="sm-gallery-grid" id="smGalleryContainer"></div>
+  </div>
+</div>
+
+<!-- Video Modal for Stories -->
+<div id="smVideoModal" class="sm-video-modal">
+  <div class="sm-modal-content">
+    <button class="sm-modal-close" id="smModalCloseBtn">&times;</button>
+    <video id="smModalVideo" class="sm-modal-video" controls></video>
+    <button id="smPlayPauseBtn" class="sm-play-pause-btn">⏸ Pause</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, once: true, offset: 100 });
+
+  // ---------- DATA ----------
+  const stories = [
+    { name: "Emma", avatar: "hr22.webp", video: "281967_medium.mp4" },
+    { name: "Marcus", avatar: "hr23.webp", video: "99278-653943177_medium.mp4" },
+    { name: "Sofia", avatar: "hr24.webp", video: "35175-405504228_medium.mp4" },
+    { name: "Alex", avatar: "hr25.webp", video: "29395-375947009_medium.mp4" },
+    { name: "Priya", avatar: "hr26.webp", video: "21844-322234054_medium.mp4" }
+  ];
+
+  const postsData = [
+    { id:1, name:"Emma Richards", avatarInit:"ER", time:"2h ago", caption:"Yellow aesthetic! 💛", image:"digital10.webp", likes:345, liked:false, commentsList:["Great vibes!","Love the color!"] },
+    { id:2, name:"Marcus Chen", avatarInit:"MC", time:"4h ago", caption:"New reel soon 🚀", image:"digital12.webp", likes:678, liked:false, commentsList:["Can't wait!","Fire content"] },
+    { id:3, name:"Sofia Lopez", avatarInit:"SL", time:"6h ago", caption:"Meetup was amazing!", image:"digital14.webp", likes:234, liked:false, commentsList:["Wish I was there!","Looks fun"] },
+    { id:4, name:"Alex Rivera", avatarInit:"AR", time:"8h ago", caption:"Growth tips", image:"digital15.webp", likes:892, liked:false, commentsList:["So helpful!","Thanks Alex"] },
+    { id:5, name:"Priya K.", avatarInit:"PK", time:"12h ago", caption:"Golden hour 📸", image:"digital16.webp", likes:456, liked:false, commentsList:["Stunning!","Beautiful"] },
+    { id:6, name:"Yellow Creators", avatarInit:"YC", time:"1d ago", caption:"Reels update!", image:"bengaluru.webp", likes:1234, liked:false, commentsList:["Finally!","Awesome"] }
+  ];
+
+  const reelsData = [
+    { id:1, video:"281967_medium.mp4", likes:1200, liked:false },
+    { id:2, video:"1006-142621176_small.mp4", likes:2300, liked:false },
+    { id:3, video:"99278-653943177_medium.mp4", likes:890, liked:false },
+    { id:4, video:"1405-147169806_medium.mp4", likes:3400, liked:false },
+    { id:5, video:"4942-181472383_medium.mp4", likes:560, liked:false }
+  ];
+
+  const friendRequests = [
+    { name:"Liam O.", img:"Hr.webp" },
+    { name:"Zara K.", img:"hr1.webp" },
+    { name:"Noah P.", img:"hr2.webp" }
+  ];
+
+  const products = [
+    { name:"Lakme", price:"₹1,299", img:"Beauty9.webp" },
+    { name:"Stackly Jewellery", price:"₹799", img:"Jew7.webp" },
+    { name:"Mobile ", price:"₹49999", img:"Mobile8.webp" },
+    { name:"Jewellery", price:"₹2,999", img:"Jew12.webp" }
+  ];
+
+  const reviews = [
+    { name:"Anjali  S.", photo:"hr3.webp", rating:5, text:"Best platform ever! The yellow theme is so fresh." },
+    { name:"Rahul M.", photo:"hr4.webp", rating:4, text:"Love the reels feature. Very engaging community." },
+    { name:"Vidya P.", photo:"hr6.webp", rating:5, text:"Marketplace is super convenient. Got my hoodie fast!" }
+  ];
+
+  const galleryItems = [
+    { type:"portrait", url:"award5.webp" },
+    { type:"square", url:"Fash6.webp" },
+    { type:"landscape", url:"r13.webp" },
+    { type:"portrait", url:"hr12.webp" },
+    { type:"square", url:"r4.webp" }
+  ];
+
+  // ---------- SEARCH ----------
+  const dummyUsers = ["Emma Watson","Marcus Lee","Sofia Chen","Alex Johnson","Priya Mehta","Yellow Creator"];
+  const searchInput = document.getElementById('smSearchInput');
+  const goBtn = document.getElementById('smGoBtn');
+  const resultsDiv = document.getElementById('smSearchResults');
+  function performSearch() {
+    const q = searchInput.value.trim();
+    if(!q) { alert("⚠️ Text is mandatory"); return; }
+    const filtered = dummyUsers.filter(u => u.toLowerCase().includes(q.toLowerCase()));
+    resultsDiv.innerHTML = filtered.length ? filtered.map(u => `<div class="sm-result-item">${u}</div>`).join('') : '<div class="sm-result-item">No users found</div>';
+    resultsDiv.classList.add('active');
+    document.querySelectorAll('.sm-result-item').forEach(el => el.addEventListener('click', () => window.location.href='404.html'));
+  }
+  goBtn.addEventListener('click', performSearch);
+  searchInput.addEventListener('keypress', e => { if(e.key === 'Enter') performSearch(); });
+
+  // ---------- STORIES MODAL ----------
+  const modal = document.getElementById('smVideoModal');
+  const modalVideo = document.getElementById('smModalVideo');
+  const closeModal = document.getElementById('smModalCloseBtn');
+  const playPauseModal = document.getElementById('smPlayPauseBtn');
+  function openStory(video) { modalVideo.src = video; modal.classList.add('active'); modalVideo.play(); }
+  closeModal.onclick = () => { modal.classList.remove('active'); modalVideo.pause(); modalVideo.src = ''; };
+  playPauseModal.onclick = () => { if(modalVideo.paused) { modalVideo.play(); playPauseModal.innerHTML = '⏸ Pause'; } else { modalVideo.pause(); playPauseModal.innerHTML = '▶️ Play'; } };
+  modal.onclick = (e) => { if(e.target === modal) closeModal.click(); };
+  function renderStories() {
+    const cont = document.getElementById('smStoriesContainer');
+    cont.innerHTML = '';
+    stories.forEach(s => {
+      const div = document.createElement('div');
+      div.className = 'sm-story-card';
+      div.innerHTML = `<div class="sm-story-ring"><div class="sm-story-avatar" style="background-image:url(${s.avatar})"></div></div><div class="sm-story-name">${s.name}</div>`;
+      div.onclick = () => openStory(s.video);
+      cont.appendChild(div);
+    });
+  }
+
+  // ---------- REELS (horizontal) ----------
+  function renderReels() {
+    const container = document.getElementById('smReelsContainer');
+    container.innerHTML = '';
+    reelsData.forEach(reel => {
+      const reelDiv = document.createElement('div');
+      reelDiv.className = 'sm-reel-card';
+      reelDiv.innerHTML = `
+        <video class="sm-reel-video" muted loop playsinline>
+          <source src="${reel.video}" type="video/mp4">
+        </video>
+        <div class="sm-reel-play-pause"><i class="fas fa-play-circle"></i> Play/Pause</div>
+        <div class="sm-reel-actions">
+          <button class="sm-reel-like-btn" data-id="${reel.id}"><i class="far fa-heart"></i> ${reel.likes}</button>
+          <button class="sm-reel-share-btn" data-id="${reel.id}"><i class="far fa-share-square"></i> Share</button>
+        </div>
+      `;
+      const video = reelDiv.querySelector('video');
+      const ppBtn = reelDiv.querySelector('.sm-reel-play-pause');
+      ppBtn.onclick = (e) => {
+        e.stopPropagation();
+        if(video.paused) { video.play(); ppBtn.innerHTML = '<i class="fas fa-pause-circle"></i> Pause'; }
+        else { video.pause(); ppBtn.innerHTML = '<i class="fas fa-play-circle"></i> Play'; }
+      };
+      reelDiv.addEventListener('mouseenter', () => video.play());
+      reelDiv.addEventListener('mouseleave', () => video.pause());
+      container.appendChild(reelDiv);
+    });
+    document.querySelectorAll('.sm-reel-like-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = parseInt(btn.dataset.id);
+        const reel = reelsData.find(r => r.id === id);
+        if(reel) { reel.liked = !reel.liked; reel.likes += reel.liked ? 1 : -1; btn.innerHTML = `<i class="far fa-heart"></i> ${reel.likes}`; }
+      });
+    });
+    document.querySelectorAll('.sm-reel-share-btn').forEach(btn => btn.addEventListener('click', () => window.location.href = '404.html'));
+  }
+
+  // ---------- POSTS ----------
+  function renderPosts() {
+    const container = document.getElementById('smPostsContainer');
+    container.innerHTML = '';
+    postsData.forEach(post => {
+      const div = document.createElement('div');
+      div.className = 'sm-post-card';
+      div.innerHTML = `
+        <div class="sm-post-header"><div class="sm-post-avatar">${post.avatarInit}</div><div class="sm-post-user"><h4>${post.name}</h4><div class="sm-post-time">${post.time}</div></div></div>
+        <div class="sm-post-caption">${post.caption}</div>
+        <div class="sm-post-image" style="background-image:url(${post.image})"></div>
+        <div class="sm-post-stats"><span class="sm-like-count-${post.id}"><i class="fas fa-thumbs-up"></i> ${post.likes}</span><span><i class="fas fa-comment"></i> ${post.commentsList.length}</span></div>
+        <div class="sm-post-actions">
+          <button class="sm-action-btn sm-like-btn" data-id="${post.id}"><i class="far fa-thumbs-up"></i> Like</button>
+          <button class="sm-action-btn sm-comment-btn" data-id="${post.id}"><i class="far fa-comment"></i> Comment</button>
+          <button class="sm-action-btn sm-share-btn"><i class="far fa-share-square"></i> Share</button>
+          <button class="sm-action-btn sm-remix-btn"><i class="fas fa-music"></i> Remix</button>
+          <button class="sm-action-btn sm-save-btn"><i class="far fa-bookmark"></i> Save</button>
+        </div>
+        <div class="sm-comment-section" id="smCommentSec-${post.id}">${post.commentsList.map(c => `<div class="sm-single-comment">💬 ${c}</div>`).join('')}</div>
+      `;
+      container.appendChild(div);
+    });
+    document.querySelectorAll('.sm-like-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = parseInt(btn.dataset.id);
+        const post = postsData.find(p => p.id === id);
+        if(post) { post.liked = !post.liked; post.likes += post.liked ? 1 : -1; document.querySelector(`.sm-like-count-${id}`).innerHTML = `<i class="fas fa-thumbs-up"></i> ${post.likes}`; }
+      });
+    });
+    document.querySelectorAll('.sm-comment-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => { const id = parseInt(btn.dataset.id); document.getElementById(`smCommentSec-${id}`).classList.toggle('active'); });
+    });
+    document.querySelectorAll('.sm-share-btn, .sm-remix-btn, .sm-save-btn').forEach(btn => btn.addEventListener('click', () => window.location.href = '404.html'));
+  }
+
+  // ---------- FRIEND REQUESTS ----------
+  function renderFriends() {
+    const container = document.getElementById('smFriendsContainer');
+    container.innerHTML = '';
+    friendRequests.forEach(f => {
+      const div = document.createElement('div');
+      div.className = 'sm-friend-item';
+      div.innerHTML = `<div class="sm-friend-info"><div class="sm-friend-avatar-img" style="background-image:url(${f.img})"></div><strong>${f.name}</strong></div><div class="sm-friend-buttons"><button class="sm-confirm-btn">Confirm</button><button class="sm-delete-btn">Delete</button></div>`;
+      div.querySelector('.sm-confirm-btn').onclick = () => window.location.href = '404.html';
+      div.querySelector('.sm-delete-btn').onclick = () => window.location.href = '404.html';
+      container.appendChild(div);
+    });
+  }
+
+  // ---------- MARKETPLACE ----------
+  function renderShop() {
+    const container = document.getElementById('smShopContainer');
+    container.innerHTML = '';
+    products.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'sm-product';
+      div.innerHTML = `<div class="sm-product-img" style="background-image:url(${p.img})"></div><div><strong>${p.name}</strong></div><div>${p.price}</div><button class="sm-buy-btn">Buy now</button>`;
+      div.querySelector('.sm-buy-btn').onclick = () => window.location.href = '404.html';
+      container.appendChild(div);
+    });
+  }
+
+  // ---------- REVIEWS ----------
+  function renderReviews() {
+    const container = document.getElementById('smReviewsContainer');
+    container.innerHTML = '';
+    reviews.forEach(r => {
+      let stars = '';
+      for(let i=0;i<5;i++) stars += i<r.rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>';
+      const div = document.createElement('div');
+      div.className = 'sm-review-card';
+      div.innerHTML = `<div class="sm-review-avatar" style="background-image:url(${r.photo})"></div><div class="sm-review-content"><strong>${r.name}</strong><div class="sm-review-stars">${stars}</div><div class="sm-review-text">"${r.text}"</div></div>`;
+      container.appendChild(div);
+    });
+  }
+
+  // ---------- GALLERY ----------
+  function renderGallery() {
+    const container = document.getElementById('smGalleryContainer');
+    container.innerHTML = '';
+    galleryItems.forEach(i => {
+      const div = document.createElement('div');
+      div.className = `sm-gallery-item sm-${i.type}`;
+      div.style.backgroundImage = `url(${i.url})`;
+      container.appendChild(div);
+    });
+  }
+
+  renderStories();
+  renderReels();
+  renderPosts();
+  renderFriends();
+  renderShop();
+  renderReviews();
+  renderGallery();
+</script>
+</body>
+</html>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Hero Section */
+    .hero-split {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      position: relative;
+      background: radial-gradient(ellipse at 70% 30%, #1a1a1a, #000000);
+      overflow: hidden;
+    }
+
+    /* Abstract background blobs */
+    .hero-bg-blob {
+      position: absolute;
+      width: 40vw;
+      height: 40vw;
+      background: radial-gradient(circle, rgba(250,204,21,0.08), transparent);
+      border-radius: 50%;
+      filter: blur(60px);
+      z-index: 0;
+    }
+    .blob-1 { top: -20%; left: -10%; width: 60vw; height: 60vw; animation: floatBlob 20s infinite alternate; }
+    .blob-2 { bottom: -20%; right: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(250,204,21,0.05), transparent); animation: floatBlob 25s infinite alternate-reverse; }
+    @keyframes floatBlob {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(5%, 5%) scale(1.1); }
+    }
+
+    .hero-container {
+      max-width: 1280px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Left Content */
+    .hero-left {
+      flex: 1.2;
+      min-width: 280px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(250,204,21,0.12);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 1rem;
+      border-radius: 60px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #facc15;
+      border: 1px solid rgba(250,204,21,0.3);
+      margin-bottom: 1.5rem;
+      animation: pulseGlow 2s infinite;
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(250,204,21,0.2); }
+      70% { box-shadow: 0 0 0 10px rgba(250,204,21,0); }
+      100% { box-shadow: 0 0 0 0 rgba(250,204,21,0); }
+    }
+
+    .hero-left h1 {
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff, #facc15);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .typed-text {
+      color: #facc15;
+      border-right: 3px solid #facc15;
+      white-space: nowrap;
+      overflow: hidden;
+      display: inline-block;
+      animation: blinkCursor 0.8s step-end infinite;
+    }
+    @keyframes blinkCursor {
+      0%, 100% { border-color: #facc15; }
+      50% { border-color: transparent; }
+    }
+
+    .hero-description {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #cbd5e1;
+      max-width: 500px;
+      margin-bottom: 2rem;
+    }
+
+    /* CTA Buttons */
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .btn-primary {
+      background: #facc15;
+      color: #000;
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.3s;
+      box-shadow: 0 8px 20px rgba(250,204,21,0.3);
+    }
+    .btn-primary:hover {
+      background: #eab308;
+      transform: translateY(-3px);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid rgba(250,204,21,0.6);
+      color: #facc15;
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.3s;
+    }
+    .btn-outline:hover {
+      background: rgba(250,204,21,0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Social Proof */
+    .social-proof {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .proof-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .proof-number {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #facc15;
+    }
+    .proof-label {
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+
+    /* Right Side: Floating Social Card */
+    .hero-right {
+      flex: 0.9;
+      min-width: 280px;
+      display: flex;
+      justify-content: center;
+    }
+    .floating-card {
+      background: rgba(15,15,15,0.75);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 360px;
+      border: 1px solid rgba(250,204,21,0.3);
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+      animation: floatCard 4s infinite alternate ease-in-out;
+    }
+    @keyframes floatCard {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-10px); }
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+    .card-avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(145deg, #facc15, #ca8a04);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #000;
+    }
+    .card-user h4 { color: white; font-size: 0.9rem; }
+    .card-user span { font-size: 0.7rem; color: #94a3b8; }
+    .card-post-img {
+      width: 100%;
+      height: 180px;
+      background: linear-gradient(135deg, #facc15, #ffb347);
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-weight: bold;
+    }
+    .card-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.8rem;
+      color: #cbd5e1;
+      font-size: 0.75rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .hero-split { padding: 3rem 1.5rem; }
+      .hero-container { flex-direction: column; text-align: center; }
+      .hero-left { text-align: center; display: flex; flex-direction: column; align-items: center; }
+      .hero-description { margin-left: auto; margin-right: auto; }
+      .social-proof { justify-content: center; }
+      .floating-card { max-width: 320px; }
+      .typed-text { white-space: normal; border-right: none; animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero-split">
+    <!-- Animated background blobs -->
+    <div class="hero-bg-blob blob-1"></div>
+    <div class="hero-bg-blob blob-2"></div>
+
+    <div class="hero-container">
+      <!-- Left side -->
+      <div class="hero-left">
+        <div class="hero-badge">
+          <i class="fas fa-hashtag"></i> <span>#StacklySocial</span>
+        </div>
+        <h1>
+          Your Voice, <br>
+          <span class="gradient-text">Your Community.</span><br>
+          <span class="typed-text" id="typedText">Go Viral</span>
+        </h1>
+        <p class="hero-description">
+          Stackly is the next‑gen social platform where creators thrive. 
+          Share reels, connect with fans, and turn your passion into impact.
+        </p>
+        <div class="hero-buttons">
+          <a href="404.html" class="btn-primary"><i class="fas fa-rocket"></i> Start Creating</a>
+          <a href="404.html" class="btn-outline"><i class="fas fa-play-circle"></i> Watch Demo</a>
+        </div>
+        <div class="social-proof">
+          <div class="proof-item"><span class="proof-number">10M+</span><span class="proof-label">Users</span></div>
+          <div class="proof-item"><span class="proof-number">500M+</span><span class="proof-label">Interactions</span></div>
+          <div class="proof-item"><span class="proof-number">4.9★</span><span class="proof-label">Rating</span></div>
+        </div>
+      </div>
+
+      <!-- Right side: Floating card -->
+      <div class="hero-right">
+        <div class="floating-card">
+          <div class="card-header">
+            <div class="card-avatar"><i class="fas fa-user-astronaut"></i></div>
+            <div class="card-user">
+              <h4>@yellowvibes_</h4>
+              <span>🔥 2M followers</span>
+            </div>
+          </div>
+          <div class="card-post-img">
+            <i class="fas fa-play-circle" style="font-size: 48px;"></i>
+            <span style="margin-left: 8px;">Reel of the day</span>
+          </div>
+          <p style="color:#e2e8f0; font-size:0.8rem;">✨ “Stackly changed the game! Best community ever.”</p>
+          <div class="card-stats">
+            <span><i class="fas fa-heart" style="color:#facc15;"></i> 128K likes</span>
+            <span><i class="fas fa-comment"></i> 4.2K comments</span>
+            <span><i class="fas fa-share"></i> 12K shares</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Simple typing animation for the last word
+    const words = ["Go Viral", "Be Seen", "Create", "Inspire"];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typedSpan = document.getElementById("typedText");
+
+    function typeEffect() {
+      const currentWord = words[wordIndex];
+      if (isDeleting) {
+        typedSpan.textContent = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typedSpan.textContent = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+      }
+      if (!isDeleting && charIndex === currentWord.length) {
+        isDeleting = true;
+        setTimeout(typeEffect, 1500);
+        return;
+      }
+      if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        setTimeout(typeEffect, 500);
+        return;
+      }
+      setTimeout(typeEffect, isDeleting ? 80 : 120);
+    }
+    typeEffect();
+  </script>
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Social Stack | Social Media Mastery → YouTube Video Hub</title>
+  <!-- Google Fonts for crisp typography (Inter) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+      background-color: #000000;
+      color: #f0f0f0;
+      scroll-behavior: smooth;
+    }
+
+    /* ========= HERO SECTION – FULLSCREEN VIDEO BACKGROUND ========= */
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.68);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 880px;
+      width: 90%;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFFFFF, #FFD966, #FFB347);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-content p {
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      line-height: 1.5;
+      color: #eeeeee;
+      max-width: 650px;
+      margin: 0 auto 2rem auto;
+      font-weight: 500;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 60px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      font-family: inherit;
+      background: none;
+    }
+
+    .btn-primary {
+      background: #FFB347;
+      color: #0a0a0a;
+      box-shadow: 0 6px 18px rgba(255, 180, 71, 0.3);
+      border-color: #FFB347;
+    }
+
+    .btn-primary:hover {
+      background: #ffc46b;
+      transform: translateY(-3px);
+    }
+
+    .btn-outline {
+      border: 1.5px solid #FFB347;
+      color: #FFB347;
+      background: transparent;
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 180, 71, 0.15);
+      transform: translateY(-3px);
+    }
+
+    /* ========= STACKED SOCIAL MEDIA TOPICS (NO AOS, PURE OVERLAP EFFECT) ========= */
+    .social-stack-section {
+      max-width: 1280px;
+      margin-top: 50px;
+      margin: 0 auto;
+      padding: 5rem 2rem 3rem 2rem;
+      background: #000000;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-badge {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 180, 71, 0.12);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #FFB347;
+      border: 0.5px solid rgba(255, 180, 71, 0.3);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.6rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(120deg, #ffffff, #FFD966);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: #bbbbbb;
+      max-width: 680px;
+      margin: 0 auto 3rem auto;
+      font-size: 1.05rem;
+    }
+
+    .stacked-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+    }
+
+    .topic-card {
+      background: #0c0c0c;
+      border-radius: 2rem;
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      transition: all 0.3s ease;
+      border: 1px solid #1f1f1f;
+      box-shadow: 0 15px 35px -12px rgba(0, 0, 0, 0.6);
+    }
+
+    .topic-card:hover {
+      border-color: #FFB34760;
+      transform: translateY(-4px);
+      background: #111111;
+    }
+
+    .card-media {
+      flex: 1.2;
+      min-width: 240px;
+      max-height: 260px;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .topic-card:hover .card-media img {
+      transform: scale(1.02);
+    }
+
+    .card-info {
+      flex: 2;
+      padding: 2rem 2rem 2rem 2.2rem;
+    }
+
+    .topic-icon {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .topic-icon span {
+      font-size: 2rem;
+    }
+
+    .topic-icon h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, #e0e0e0);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .card-info p {
+      color: #c0c0c0;
+      line-height: 1.5;
+      margin: 0.8rem 0 1rem 0;
+      font-size: 1rem;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-top: 0.8rem;
+    }
+
+    .stat {
+      background: #161616;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #FFB347;
+      border: 0.5px solid #2a2a2a;
+    }
+
+    .topic-card.reverse {
+      flex-direction: row-reverse;
+    }
+
+    /* ========= OVERLAPPING PRICING CARDS – SOCIAL MEDIA THEMED (NEGATIVE MARGIN OVERLAP) ========= */
+    .pricing-overlap {
+      position: relative;
+      z-index: 2;
+      margin-top: -4rem;
+      padding-bottom: 5rem;
+      background: transparent;
+    }
+
+    .pricing-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .pricing-card {
+      background: #0c0c0c;
+      border-radius: 2rem;
+      padding: 2rem 1.5rem;
+      border: 1px solid #1f1f1f;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(2px);
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-8px);
+      border-color: #FFB34780;
+      background: #111111;
+    }
+
+    .pricing-card.popular {
+      border-color: #FFB347;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card.popular::before {
+      content: "🔥 MOST POPULAR";
+      position: absolute;
+      top: 12px;
+      right: -30px;
+      background: #FFB347;
+      color: #0a0a0a;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.3rem 2rem;
+      transform: rotate(45deg);
+      width: 130px;
+      text-align: center;
+    }
+
+    .plan-name {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #fff, #e0e0e0);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .plan-price {
+      margin: 1rem 0 0.5rem;
+    }
+
+    .price {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #FFB347;
+    }
+
+    .price-period {
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    .plan-description {
+      color: #aaa;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #222;
+      padding-bottom: 1rem;
+    }
+
+    .features-list {
+      list-style: none;
+      margin: 0 0 1.8rem 0;
+      flex-grow: 1;
+    }
+
+    .features-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.8rem;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    /* unified pricing button style (anchor/button both look consistent) */
+    .btn-pricing {
+      width: 100%;
+      background: transparent;
+      border: 1.5px solid #FFB347;
+      color: #FFB347;
+      padding: 0.8rem;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-family: inherit;
+      text-align: center;
+      display: inline-block;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .btn-pricing:hover {
+      background: #FFB347;
+      color: #0a0a0a;
+      transform: translateY(-2px);
+    }
+
+    .btn-pricing.primary {
+      background: #FFB347;
+      color: #0a0a0a;
+    }
+
+    .btn-pricing.primary:hover {
+      background: #ffc46b;
+    }
+
+    /* extra video redirect card (explicit "watch video" section) */
+    .extra-video-cta {
+      margin-top: 4rem;
+      display: flex;
+      justify-content: center;
+    }
+    .video-cta-card {
+      background: linear-gradient(125deg, #0f0f0f, #0a0a0a);
+      border-radius: 2rem;
+      border: 1px solid #FFB34740;
+      padding: 1.2rem 2.2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      transition: 0.2s;
+    }
+    .video-cta-card:hover {
+      border-color: #FFB347;
+      transform: scale(1.02);
+    }
+    .video-cta-card span {
+      font-size: 2rem;
+    }
+    .video-cta-card a {
+      color: #FFB347;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.2px;
+    }
+    .video-cta-card a:hover {
+      text-decoration: underline;
+      color: #ffd58c;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid #151515;
+      font-size: 0.8rem;
+      color: #5e5e5e;
+      background: #000000;
+    }
+
+    /* responsive overlapping fix */
+    @media (max-width: 780px) {
+      .topic-card, .topic-card.reverse {
+        flex-direction: column;
+      }
+      .card-media {
+        width: 100%;
+        max-height: 220px;
+      }
+      .card-info {
+        padding: 1.6rem;
+      }
+      .section-title {
+        font-size: 2rem;
+      }
+      .social-stack-section {
+        padding: 3rem 1.2rem 2rem;
+      }
+      .pricing-overlap {
+        margin-top: -2rem;
+        padding-bottom: 3rem;
+      }
+      .pricing-container {
+        padding: 0 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .pricing-overlap {
+        margin-top: -1rem;
+      }
+      .price {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO SECTION: VIDEO BACKGROUND + OVERLAY -->
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline poster="">
+      <source src="281967_medium.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Social Stack</h1>
+      <p>Your hub for platform mastery — insights, trends, and growth strategies for every social channel.</p>
+      <div class="btn-group">
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- STACKED SOCIAL MEDIA TOPICS (NO AOS, DIRECT CONTENT) -->
+  <section class="social-stack-section" id="topics">
+    <div class="section-badge">
+      <div class="badge">⚡ stacked • social ecosystem</div>
+    </div>
+    <h2 class="section-title">Our Social Universe</h2>
+    <div class="section-sub">Master the platforms that move culture — insights, metrics, and creative strategies.</div>
+
+    <div class="stacked-cards">
+      <!-- Instagram -->
+      <div class="topic-card">
+        <div class="card-media">
+          <img src="sa6 (1).webp" alt="Instagram visual storytelling" loading="lazy">
+        </div>
+        <div class="card-info">
+          <div class="topic-icon"><span>📱</span><h3>Instagram</h3></div>
+          <p>Visual storytelling at scale. From Reels to carousels, we decode the algorithm and help you build a loyal following with authentic aesthetics.</p>
+          <div class="stat-row"><span class="stat">✨ 124k engaged</span><span class="stat">🎨 98% original content</span></div>
+        </div>
+      </div>
+      <!-- TikTok (reverse) -->
+      <div class="topic-card reverse">
+        <div class="card-media">
+          <img src="sa5 (1).webp" alt="TikTok viral energy" loading="lazy">
+        </div>
+        <div class="card-info">
+          <div class="topic-icon"><span>🎵</span><h3>TikTok</h3></div>
+          <p>Short‑form energy meets viral potential. We help creators spark trends, not follow them — with challenges, sounds, and raw authenticity.</p>
+          <div class="stat-row"><span class="stat">🔥 3.2M monthly views</span><span class="stat">🚀 200% growth</span></div>
+        </div>
+      </div>
+      <!-- X / Twitter -->
+      <div class="topic-card">
+        <div class="card-media">
+          <img src="sa3 (1).webp" alt="X/Twitter conversations" loading="lazy">
+        </div>
+        <div class="card-info">
+          <div class="topic-icon"><span>🐦</span><h3>X (Twitter)</h3></div>
+          <p>Real‑time conversations that shape culture. We foster dialogue, community threads, and thought leadership that cuts through the noise.</p>
+          <div class="stat-row"><span class="stat">💬 45k+ mentions</span><span class="stat">⚡ trending weekly</span></div>
+        </div>
+      </div>
+      <!-- LinkedIn (reverse) -->
+      <div class="topic-card reverse">
+        <div class="card-media">
+          <img src="sa1.webp" alt="LinkedIn professional growth" loading="lazy">
+        </div>
+        <div class="card-info">
+          <div class="topic-icon"><span>💼</span><h3>LinkedIn</h3></div>
+          <p>Professional growth with purpose. We help brands and creators build authority, share insights, and unlock B2B opportunities.</p>
+          <div class="stat-row"><span class="stat">📈 +340% reach</span><span class="stat">🤝 partnership ready</span></div>
+        </div>
+      </div>
+      <!-- YouTube -->
+      <div class="topic-card">
+        <div class="card-media">
+          <img src="s4.webp" alt="YouTube empire building" loading="lazy">
+        </div>
+        <div class="card-info">
+          <div class="topic-icon"><span>▶️</span><h3>YouTube</h3></div>
+          <p>Long‑form storytelling that builds empires. From SEO to audience retention, we guide you to dominate the world's second largest search engine.</p>
+          <div class="stat-row"><span class="stat">🎬 2.1M watch time</span><span class="stat">🏆 12K+ subs/mo</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERLAPPING PRICING CARDS: ALL PLANS REDIRECT TO YOUTUBE VIDEO (NO 404) -->
+  <div class="pricing-overlap">
+    <div class="pricing-container">
+      <div class="pricing-header">
+        <div class="badge"></div>
+        <h2 style="font-size: clamp(1.8rem,4vw,2.5rem);">Grow your presence</h2>
+        <p style="color:#bbb;">Pricing tailored for creators, brands, and agencies. Every plan includes exclusive YouTube strategy demo.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Instagram Growth Plan -> redirect to YouTube video -->
+        <div class="pricing-card">
+          <div class="plan-name">📸 Instagram Boost</div>
+          <div class="plan-price"><span class="price">$19</span><span class="price-period"> /month</span></div>
+          <div class="plan-description">Perfect for rising creators & small brands.</div>
+          <ul class="features-list">
+            <li><span>✅</span> Hashtag & engagement audit</li>
+            <li><span>✅</span> 10 curated posts/month</li>
+            <li><span>✅</span> Basic analytics report</li>
+            <li><span>❌</span> Story templates</li>
+            <li><span>❌</span> Dedicated manager</li>
+          </ul>
+          <!-- DIRECT YOUTUBE LINK (no 404) -->
+          <a href="404.html" target="_blank" rel="noopener noreferrer" class="btn-pricing">Get  Plan </a>
+        </div>
+
+        <!-- TikTok + X Pro (Popular) -> redirect to YouTube video -->
+        <div class="pricing-card popular">
+          <div class="plan-name">🎵 Viral Pro</div>
+          <div class="plan-price"><span class="price">$49</span><span class="price-period"> /month</span></div>
+          <div class="plan-description">Best for TikTok, X & cross-platform virality.</div>
+          <ul class="features-list">
+            <li><span>✅</span> TikTok trend forecasting</li>
+            <li><span>✅</span> X (Twitter) engagement pods</li>
+            <li><span>✅</span> Unlimited content ideas</li>
+            <li><span>✅</span> Priority support & analytics</li>
+            <li><span>✅</span> Monthly strategy call</li>
+          </ul>
+          <a href="404.html" target="_blank" rel="noopener noreferrer" class="btn-pricing primary">Get Plan</a>
+        </div>
+
+        <!-- YouTube Empire Plan -> direct YouTube masterclass -->
+        <div class="pricing-card">
+          <div class="plan-name">▶️ YouTube Empire</div>
+          <div class="plan-price"><span class="price">$79</span><span class="price-period"> /month</span></div>
+          <div class="plan-description">Full YouTube growth + monetization toolkit.</div>
+          <ul class="features-list">
+            <li><span>✅</span> SEO & thumbnail optimization</li>
+            <li><span>✅</span> Audience retention analysis</li>
+            <li><span>✅</span> Sponsorship outreach templates</li>
+            <li><span>✅</span> 1-on-1 channel audit</li>
+            <li><span>✅</span> Access to exclusive masterclass</li>
+          </ul>
+          <a href="404.html" target="_blank" rel="noopener noreferrer" class="btn-pricing">Get Plan →</a>
+        </div>
+      </div>
+
+      <!-- EXTRA VIDEO REDIRECT: "add one video and click on redirect youtube video" explicit requirement -->
+      <div class="extra-video-cta">
+        <div class="video-cta-card">
+          <span>📺</span>
+          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">
+            🔥 Watch Social Stack Full Overview (YouTube) → Click to unlock insider tips
+          </a>
+          <span>🎬</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <script>
+    // Hero button interactions (smooth scroll + community alert)
+    const exploreBtn = document.getElementById('exploreBtn');
+    const vibeBtn = document.getElementById('vibeBtn');
+    
+    if (exploreBtn) {
+      exploreBtn.addEventListener('click', () => {
+        const topicsSection = document.querySelector('.social-stack-section');
+        if (topicsSection) {
+          topicsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+    
+    if (vibeBtn) {
+      vibeBtn.addEventListener('click', () => {
+        alert('🎉 Join our social community — exclusive updates & creator events!');
+      });
+    }
+    
+    // Ensure hero video autoplay works (handles browsers blocking autoplay)
+    const heroVideo = document.querySelector('.hero-video');
+    if (heroVideo) {
+      heroVideo.play().catch(e => console.log("Autoplay was prevented, user interaction needed but video element is present."));
+    }
+    
+    // Optional: any extra safety for overlapping visuals on window resize
+    // All pricing buttons are direct anchor links to YouTube (no 404, no AOS)
+    // Full overlapping design with negative margin creates stylish overlap between stacked section and pricing.
+  </script>
+</body>
+</html>
+</body>
+</html>
+
+</body>
+</html>
+  <!-- small note: fully responsive, no extra JS needed -->
+</body>
+</html>
+<!-- Stackly Footer - Enhanced with more content (unique classes) -->
+<footer class="stackly-footer-wrapper">
+  <div class="stackly-footer-container">
+    <div class="stackly-footer-grid">
+      
+      <!-- Column 1: Brand + Logo + Social proof -->
+      <div class="stackly-footer-brand">
+        <div class="stackly-footer-logo">
+          <img src="stacklylogo (1).webp" alt="Stackly Logo" class="stackly-footer-logo-img" width="148" height="48">
+          <span class="stackly-footer-logo-text"></span>
+        </div>
+        <p class="stackly-footer-description">Where communities rise. Connect, create, and share your story across all major platforms. Yellow vibe — bold identity.</p>
+        <div class="stackly-footer-stats">
+          <span><i class="fas fa-users"></i> 250K+ Users</span>
+          <span><i class="fas fa-globe"></i> 15+ Countries</span>
+        </div>
+        <div class="stackly-footer-tagline">
+          <i class="fas fa-bolt"></i>
+          <span>#StacklySocial | #DigitalWave</span>
+        </div>
+        <!-- App badges -->
+        <div class="stackly-footer-app-badges">
+          <a href="404.html"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" style="height: 40px;"></a>
+          <a href="404.html"><img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on App Store" style="height: 40px;"></a>
+        </div>
+      </div>
+
+      <!-- Column 2: Quick Links -->
+      <div class="stackly-footer-links">
+        <h4 class="stackly-footer-heading">Explore</h4>
+        <ul class="stackly-footer-nav">
+          <li><a href="index.html"><i class="fas fa-hashtag"></i> Home</a></li>
+          <li><a href="events.html"><i class="fas fa-users"></i> Events</a></li>
+          <li><a href="posts.html"><i class="fas fa-chart-line"></i> Posts</a></li>
+          <li><a href="about.html"><i class="fas fa-shield-alt"></i> About</a></li>
+          <li><a href="contact.html"><i class="fas fa-headset"></i> Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Resources (new) -->
+      <div class="stackly-footer-resources">
+        <h4 class="stackly-footer-heading">Resources</h4>
+        <ul class="stackly-footer-nav">
+          <li><a href="404.html"><i class="fas fa-blog"></i> Blog</a></li>
+          <li><a href="404.html"><i class="fas fa-chalkboard-user"></i> Creator Hub</a></li>
+          <li><a href="404.html"><i class="fas fa-circle-info"></i> Help Center</a></li>
+          <li><a href="404.html"><i class="fas fa-bullhorn"></i> Press Kit</a></li>
+          <li><a href="404.html"><i class="fas fa-code"></i> Developers</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Newsletter + Social Icons -->
+      <div class="stackly-footer-newsletter">
+        <h4 class="stackly-footer-heading">Subscribe & Go viral</h4>
+        <div class="stackly-footer-form">
+          <div class="stackly-footer-input-group">
+            <input type="email" id="stacklyFooterEmail" class="stackly-footer-email-input" placeholder="Your email address *" required>
+            <button id="stacklyFooterSubscribeBtn" class="stackly-footer-subscribe-btn"><i class="fas fa-paper-plane"></i> Subscribe now</button>
+            <span id="stacklyFooterErrorMsg" class="stackly-footer-error-msg"></span>
+          </div>
+          <div class="stackly-footer-follow-text">
+            <i class="fas fa-gift"></i> Get exclusive updates & early access
+          </div>
+        </div>
+        <div class="stackly-footer-social-icons">
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-linkedin-in"></i></a>
+          <a href="404.html" class="stackly-footer-social-icon"><i class="fab fa-youtube"></i></a>
+         
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar with back-to-top and more legal links -->
+    <div class="stackly-footer-bottom">
+      <div class="stackly-footer-copyright">
+        <i class="far fa-copyright"></i> 2026 Stackly — All social rights reserved. <i class="fas fa-heart" style="color:#facc15;"></i>
+      </div>
+      <div class="stackly-footer-legal">
+        <a href="404.html">Privacy</a>
+        <a href="404.html">Terms</a>
+        <a href="404.html">Cookies</a>
+        <a href="404.html">Accessibility</a>
+        <a href="404.html"><i class="fab fa-discord"></i> Discord</a>
+        <a href="index.html" id="stacklyBackToTop"><i class="fas fa-arrow-up"></i> Top</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* ---------- STACKLY FOOTER UNIQUE STYLES (no overlap) ---------- */
+  .stackly-footer-wrapper {
+    background: #000000;
+    color: #ffffff;
+    border-top: 4px solid #facc15;
+    margin-top: 2rem;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  .stackly-footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 1.5rem;
+  }
+  .stackly-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .stackly-footer-brand, .stackly-footer-links, .stackly-footer-resources, .stackly-footer-newsletter {
+    text-align: left;
+  }
+  .stackly-footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+  .stackly-footer-logo-img {
+    width: 148px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+  .stackly-footer-logo-text {
+    font-size: 1.7rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #facc15 0%, #ffde6e 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .stackly-footer-description {
+    line-height: 1.5;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+  }
+  .stackly-footer-stats {
+    display: flex;
+    gap: 1rem;
+    margin: 0.8rem 0;
+    font-size: 0.8rem;
+    color: #facc15;
+  }
+  .stackly-footer-stats i {
+    margin-right: 4px;
+  }
+  .stackly-footer-tagline {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.75rem;
+    background: rgba(250, 204, 21, 0.12);
+    padding: 0.3rem 0.9rem;
+    border-radius: 40px;
+    width: fit-content;
+    color: #facc15;
+    margin-bottom: 1rem;
+  }
+  .stackly-footer-app-badges {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-top: 0.8rem;
+  }
+  .stackly-footer-app-badges img {
+    height: 38px;
+    width: auto;
+    border-radius: 8px;
+    transition: transform 0.2s;
+  }
+  .stackly-footer-app-badges img:hover {
+    transform: scale(1.02);
+  }
+  .stackly-footer-heading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    position: relative;
+    display: inline-block;
+    color: #ffffff;
+  }
+  .stackly-footer-heading:after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 36px;
+    height: 3px;
+    background: #facc15;
+    border-radius: 2px;
+  }
+  .stackly-footer-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .stackly-footer-nav a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+  }
+  .stackly-footer-nav a i {
+    font-size: 0.7rem;
+    color: #facc15;
+  }
+  .stackly-footer-nav a:hover {
+    color: #facc15;
+    transform: translateX(4px);
+  }
+  .stackly-footer-social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+  .stackly-footer-social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 1.1rem;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    border: 1px solid #333;
+  }
+  .stackly-footer-social-icon:hover {
+    transform: translateY(-4px);
+    background: #facc15;
+    color: #000000;
+    border-color: #facc15;
+  }
+  .stackly-footer-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .stackly-footer-email-input {
+    background: #1c1c1c;
+    border: 1px solid #333;
+    padding: 0.7rem 1rem;
+    border-radius: 60px;
+    font-size: 0.85rem;
+    color: white;
+    outline: none;
+    width: 100%;
+    transition: all 0.2s;
+  }
+  .stackly-footer-email-input:focus {
+    border-color: #facc15;
+    box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.3);
+  }
+  .stackly-footer-subscribe-btn {
+    background: #facc15;
+    color: #000000;
+    border: none;
+    padding: 0.7rem;
+    border-radius: 60px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    transition: all 0.2s;
+  }
+  .stackly-footer-subscribe-btn:hover {
+    background: #ffde34;
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
+  }
+  .stackly-footer-error-msg {
+    font-size: 0.7rem;
+    color: #facc15;
+    margin-top: 4px;
+    display: block;
+    text-align: left;
+  }
+  .stackly-footer-follow-text {
+    font-size: 0.7rem;
+    margin-top: 0.8rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stackly-footer-bottom {
+    border-top: 1px solid rgba(250, 204, 21, 0.2);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.75rem;
+  }
+  .stackly-footer-copyright {
+    color: #94a3b8;
+  }
+  .stackly-footer-copyright i {
+    color: #facc15;
+  }
+  .stackly-footer-legal {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .stackly-footer-legal a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .stackly-footer-legal a:hover {
+    color: #facc15;
+  }
+  @media (max-width: 880px) {
+    .stackly-footer-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+  }
+  @media (max-width: 780px) {
+    .stackly-footer-container { padding: 1.8rem 1.2rem; }
+    .stackly-footer-grid { gap: 1.5rem; }
+    .stackly-footer-logo-text { font-size: 1.3rem; }
+  }
+  @media (max-width: 550px) {
+    .stackly-footer-bottom { flex-direction: column; text-align: center; }
+    .stackly-footer-legal { justify-content: center; }
+    .stackly-footer-stats { flex-direction: column; gap: 0.3rem; }
+  }
+</style>
+
+<script>
+  // Unique script for Stackly footer (no global conflicts)
+  (function() {
+    const subscribeBtn = document.getElementById('stacklyFooterSubscribeBtn');
+    const emailInput = document.getElementById('stacklyFooterEmail');
+    const errorSpan = document.getElementById('stacklyFooterErrorMsg');
+    const backToTop = document.getElementById('stacklyBackToTop');
+
+    function isValidEmail(email) {
+      if (!email || email.trim() === '') return false;
+      const emailRegex = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/;
+      return emailRegex.test(email.trim());
+    }
+
+    function handleSubscribe(event) {
+      event.preventDefault();
+      const emailValue = emailInput.value.trim();
+      errorSpan.innerText = '';
+
+      if (!emailValue) {
+        errorSpan.innerText = '❌ Email address is mandatory.';
+        emailInput.focus();
+        return;
+      }
+
+      if (!isValidEmail(emailValue)) {
+        errorSpan.innerText = '⚠️ Please enter a valid email (e.g., name@example.com)';
+        emailInput.focus();
+        return;
+      }
+
+      // Redirect to custom 404 page
+      window.location.href = '404.html';
+    }
+
+    if (subscribeBtn) {
+      subscribeBtn.addEventListener('click', handleSubscribe);
+      emailInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          handleSubscribe(e);
+        }
+      });
+    }
+
+    // Back to top functionality
+    if (backToTop) {
+      backToTop.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  })();
+</script>
